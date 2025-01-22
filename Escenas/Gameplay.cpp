@@ -9,6 +9,7 @@ Gameplay::Gameplay() : nodes{}
             cells[i][j] = new Sprite(Vector2{WORLD_X_OFFSET+j*CELL_SIZE,WORLD_X_OFFSET+i*CELL_SIZE},Vector2{CELL_VISUAL,CELL_VISUAL}, BLUE);
         }
     }
+    canvas = UI<Gameplay>();
 };
 
 void Gameplay::InitScene()
@@ -29,12 +30,13 @@ void Gameplay::InitScene()
     nodes[END_Y][END_X].type = EXIT;
     cells[END_Y][END_X]->ChangeColor(END_COLOR);    
 
-    canvas.AddButton(0, 0, 100, 30, "Resset", ORANGE);
-    canvas.AddButton(100, 0, 100, 30, "Empezar", GREEN);
+    // canvas.AddButton(0, 0, 100, 30, "Resset", ORANGE);
+    // canvas.AddButton(100, 0, 100, 30, "Empezar", GREEN);
 };
 
 void Gameplay::UpdateScreen(){
     Scene::UpdateScreen();
+    canvas.Update(mousePosition);
     //Depende dónde haya tocado el ratón
     //hay que actualizar un sprite si es
     //posible por el tipo de nodo, y por
@@ -63,7 +65,7 @@ void Gameplay::OnMouseDown(){
 
 void Gameplay::DrawScreen()
 {
-    canvas.Draw();
+    // canvas.Draw();
 
     for(int i = 0; i < CELL_Y; i++){
         for(int j = 0; j < CELL_X; j++){

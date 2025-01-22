@@ -8,6 +8,10 @@ enum GameScreen {
 	GAMEPLAY = 2
 };
 
+    const int screenWidth = 800;
+    const int screenHeight = 600;
+
+
 class Scene {
 protected:
 	GameScreen finishScreen;
@@ -60,6 +64,8 @@ class Tittle : public Scene {
 	Font font;
 	int click;
 
+	UI<Tittle> canvas;
+
 	
 public:
 	Tittle(Font f);
@@ -69,4 +75,6 @@ public:
 	void UnloadScreen() {finishScreen = UNKNOWN;};
 	void OnMouseDown();
 	void OnKeyPressed(KeyboardKey) {};
+	private:
+	void ToGameplay();
 };

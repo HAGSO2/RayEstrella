@@ -123,21 +123,28 @@ void Logo::DrawScreen()
     }
 };
 
-Tittle::Tittle(Font f) : font{ f } {};
+Tittle::Tittle(Font f) : font{ f } 
+{
+    canvas = UI<Tittle>();
+    canvas.AddButton(screenWidth/2,screenHeight/2,80,60, "Gameplay", WHITE, &Tittle::ToGameplay);
+    // canvas.AddButton(screenWidth/2,screenHeight/2-70,80,60, "Decrementable", WHITE,{});
+    
+};
+
+void Tittle::ToGameplay(){TraceLog(LOG_ALL,"EOEOEOEOEOEOE\n\n\n"); finishScreen = GAMEPLAY;}
 
 void Tittle::UpdateScreen() {
     Scene::UpdateScreen();
-    if (IsKeyPressed(KEY_ENTER) || IsGestureDetected(GESTURE_TAP))
-    {
-        //finishScreen = 1;   // OPTIONS
-        finishScreen = GAMEPLAY;   // GAMEPLAY
-    }
+    // if (IsKeyPressed(KEY_ENTER) || IsGestureDetected(GESTURE_TAP))
+    // {
+    //     //finishScreen = 1;   // OPTIONS
+    //     finishScreen = GAMEPLAY;   // GAMEPLAY
+    // }
 };
 
 void Tittle::OnMouseDown(){
-
-}
-
+    canvas.Update(mousePosition);
+};
 
 void Tittle::DrawScreen() {
 
@@ -145,5 +152,6 @@ void Tittle::DrawScreen() {
     Vector2 pos = { 20, 10 };
     DrawTextEx(font, "TITLE SCREEN", pos, font.baseSize * 3.0f, 4, DARKGREEN);
     DrawText("PRESS ENTER or TAP to JUMP to GAMEPLAY SCREEN", 120, 220, 20, DARKGREEN);
+    canvas.Draw();
 
 };

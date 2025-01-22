@@ -27,8 +27,6 @@ static void DrawTransition(void);
 //Argumentos contemplados:
 //Primer argumento: 1 debug ;2 normal
 int main(int argc, char *argv[]) {
-    const int screenWidth = 800;
-    const int screenHeight = 600;
     InitWindow(screenWidth, screenHeight, TITTLE_OF_THE_GAME);
     SetTraceLogLevel(LOG_ALL);
     TraceLog(LOG_DEBUG,"\n\n\nDebugging ...\n\n\n");
