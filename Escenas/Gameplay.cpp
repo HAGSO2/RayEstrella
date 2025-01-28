@@ -9,7 +9,7 @@ Gameplay::Gameplay() : nodes{}
             cells[i][j] = new Sprite(Vector2{WORLD_X_OFFSET+j*CELL_SIZE,WORLD_X_OFFSET+i*CELL_SIZE},Vector2{CELL_VISUAL,CELL_VISUAL}, BLUE);
         }
     }
-    canvas = UI<Gameplay>();
+    // canvas = UI<Gameplay>();
 };
 
 void Gameplay::InitScene()
@@ -36,7 +36,7 @@ void Gameplay::InitScene()
 
 void Gameplay::UpdateScreen(){
     Scene::UpdateScreen();
-    canvas.Update(mousePosition);
+    // canvas.Update(mousePosition);
     //Depende dónde haya tocado el ratón
     //hay que actualizar un sprite si es
     //posible por el tipo de nodo, y por

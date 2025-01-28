@@ -64,7 +64,7 @@ class Tittle : public Scene {
 	Font font;
 	int click;
 
-	UI<Tittle> canvas;
+	UI canvas;
 
 	
 public:
@@ -76,5 +76,4 @@ public:
 	void OnMouseDown();
 	void OnKeyPressed(KeyboardKey) {};
 	private:
-	void ToGameplay();
 };

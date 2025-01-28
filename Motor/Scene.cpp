@@ -123,15 +123,20 @@ void Logo::DrawScreen()
     }
 };
 
+void ToGameplay(void *& ptr){
+    // *(GameScreen*)ptr= GAMEPLAY;
+    TraceLog(LOG_ALL, "Puntero: %d,  %d", ptr,*(GameScreen*)ptr);
+    TraceLog(LOG_ALL,"EOEOEOEOEOEOE\n\n\n");};
+
 Tittle::Tittle(Font f) : font{ f } 
 {
-    canvas = UI<Tittle>();
-    canvas.AddButton(screenWidth/2,screenHeight/2,80,60, "Gameplay", WHITE, &Tittle::ToGameplay);
+    canvas = UI();
+    void* pointer = &finishScreen;
+    canvas.AddButton(screenWidth/2,screenHeight/2,80,60, "Gameplay", WHITE, ToGameplay, pointer);
     // canvas.AddButton(screenWidth/2,screenHeight/2-70,80,60, "Decrementable", WHITE,{});
     
 };
 
-void Tittle::ToGameplay(){TraceLog(LOG_ALL,"EOEOEOEOEOEOE\n\n\n"); finishScreen = GAMEPLAY;}
 
 void Tittle::UpdateScreen() {
     Scene::UpdateScreen();

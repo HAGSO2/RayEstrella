@@ -4,7 +4,6 @@
 
 using namespace std;
 
-template <typename T>
 class UIElement{
 protected:
     Rectangle area;
@@ -15,27 +14,27 @@ public:
     virtual void Update(Vector2) = 0;
 };
 
-template <typename T>
 class UI{ //Canvas
-    vector<UIElement<T>*> elements;
+    vector<UIElement*> elements;
     public:
     UI();
-    void AddButton(float x, float y, float width, float height, char* s, Color c, void (T::*Func)());
+    void AddButton(float x, float y, float width, float height, char* s, Color c, void (*Func)(void *& variable), void *&meptr);
     void Draw();
     void Update(Vector2);
 
 };
-template <typename T>
-class Button : public UIElement<T>{
+
+class Button : public UIElement{
     char* texto;
     Color color;
+    void *&ptr;
     
     
     public:
-    Button(float x, float y, float width, float height, char* s, Color c, void (T::*Func)());
+    Button(float x, float y, float width, float height, char* s, Color c, void (*Func)(void *& variable), void *&meptr);
     void Draw();
     private:
     //void (*funcPtr)()
-    void (T::*ClickFunc)();
+    void (*ClickFunc)(void *&);
     void Update(Vector2);
 };
