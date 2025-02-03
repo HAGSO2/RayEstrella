@@ -1,5 +1,7 @@
 #include <iostream>
 #include <raylib.h>
+#include "./Motor/Scene.h"
+#include "./Escenas/Gameplay.h"
 #include "./Escenas/EsDecrementable.h"
 
 GameScreen currentScreen;

@@ -1,3 +1,4 @@
+#pragma once
 enum GameScreen {
 	UNKNOWN = -1,
 	LOGO = 0,

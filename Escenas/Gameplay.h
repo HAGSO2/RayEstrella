@@ -1,3 +1,4 @@
+#pragma once
 #include "../Motor/Scene.h"
 #include "../Motor/GameObject.h"
 

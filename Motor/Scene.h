@@ -1,7 +1,7 @@
+#pragma once
 #include <raylib.h>
+#include "CommonInfo.h"
 #include "UI.h"
-
-
 
     const int screenWidth = 800;
     const int screenHeight = 600;

@@ -1,7 +1,10 @@
+#pragma once
 #include <raylib.h>
 #include <vector>
 #include <string>
 #include "CommonInfo.h"
+
+/*Tengo que sacar gameScreen del botón y hacerlo genérico*/
 
 using namespace std;
 
