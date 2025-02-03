@@ -1,6 +1,7 @@
 #include <raylib.h>
 #include <vector>
 #include <string>
+#include "CommonInfo.h"
 
 using namespace std;
 
@@ -18,23 +19,23 @@ class UI{ //Canvas
     vector<UIElement*> elements;
     public:
     UI();
-    void AddButton(float x, float y, float width, float height, char* s, Color c, void (*Func)(void *& variable), void *&meptr);
+    void AddButton(float x, float y, float width, float height, char* s, Color c, void (*Func)(GameScreen & variable), GameScreen &meptr);
     void Draw();
     void Update(Vector2);
 
 };
 
-class Button : public UIElement{
+class SceneButton : public UIElement{
     char* texto;
     Color color;
-    void *&ptr;
+    GameScreen &ptr;
     
     
     public:
-    Button(float x, float y, float width, float height, char* s, Color c, void (*Func)(void *& variable), void *&meptr);
+    SceneButton(float x, float y, float width, float height, char* s, Color c, void (*Func)(GameScreen & variable), GameScreen &meptr);
     void Draw();
     private:
     //void (*funcPtr)()
-    void (*ClickFunc)(void *&);
+    void (*ClickFunc)(GameScreen &);
     void Update(Vector2);
 };

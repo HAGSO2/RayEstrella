@@ -4,12 +4,12 @@ UI::UI(){};
 
 UIElement::UIElement(float x, float y, float width, float height) : area(Rectangle{x,y,width,height}){};
 
-Button::Button(float x, float y, float width, float height, char* s, Color c, void (*Func)(void *& variable), void *& meptr)
+SceneButton::SceneButton(float x, float y, float width, float height, char* s, Color c, void (*Func)(GameScreen & variable), GameScreen & meptr)
 : texto{s}, color{c}, ClickFunc{Func}, UIElement(x,y,width,height), ptr{meptr}
 {};
 
-void UI::AddButton(float x, float y, float width, float height, char* s, Color c, void (*Func)(void *& variable), void *& meptr){
-    elements.push_back(new Button(x,y,width,height, s, c, Func, meptr));
+void UI::AddButton(float x, float y, float width, float height, char* s, Color c, void (*Func)(GameScreen & variable), GameScreen & meptr){
+    elements.push_back(new SceneButton(x,y,width,height, s, c, Func, meptr));
 };
 
 
@@ -35,11 +35,11 @@ void UI::Update(Vector2 mouseposition){
 
 
 
-void Button::Draw(){
+void SceneButton::Draw(){
     DrawRectangleRec(area, color);
     DrawText(texto, area.x, area.y, 12, BLACK);
 };
 
-void Button::Update(Vector2 mouseposition){
+void SceneButton::Update(Vector2 mouseposition){
     ClickFunc(ptr);
 }

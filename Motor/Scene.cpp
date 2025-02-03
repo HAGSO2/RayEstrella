@@ -123,16 +123,19 @@ void Logo::DrawScreen()
     }
 };
 
-void ToGameplay(void *& ptr){
-    // *(GameScreen*)ptr= GAMEPLAY;
-    TraceLog(LOG_ALL, "Puntero: %d,  %d", ptr,*(GameScreen*)ptr);
-    TraceLog(LOG_ALL,"EOEOEOEOEOEOE\n\n\n");};
+void ToGameplay(GameScreen & ptr){
+    ptr = GAMEPLAY;
+};
+
+void ToDecrementable(GameScreen & ptr){
+    ptr = DECREMENTABLE;
+};
 
 Tittle::Tittle(Font f) : font{ f } 
 {
     canvas = UI();
-    void* pointer = &finishScreen;
-    canvas.AddButton(screenWidth/2,screenHeight/2,80,60, "Gameplay", WHITE, ToGameplay, pointer);
+    canvas.AddButton(screenWidth/2,screenHeight/2,80,60, "Gameplay", WHITE, ToGameplay, finishScreen);
+    canvas.AddButton(screenWidth/2,screenHeight/2,80,60, "Cola decrementable", WHITE, ToDecrementable, finishScreen);
     // canvas.AddButton(screenWidth/2,screenHeight/2-70,80,60, "Decrementable", WHITE,{});
     
 };
