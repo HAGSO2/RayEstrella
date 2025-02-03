@@ -1,12 +1,7 @@
 #include <raylib.h>
 #include "UI.h"
 
-enum GameScreen {
-	UNKNOWN = -1,
-	LOGO = 0,
-	TITTLE = 1,
-	GAMEPLAY = 2
-};
+
 
     const int screenWidth = 800;
     const int screenHeight = 600;
@@ -64,7 +59,7 @@ class Tittle : public Scene {
 	Font font;
 	int click;
 
-	UI<Tittle> canvas;
+	UI canvas;
 
 	
 public:
@@ -76,5 +71,4 @@ public:
 	void OnMouseDown();
 	void OnKeyPressed(KeyboardKey) {};
 	private:
-	void ToGameplay();
 };

@@ -13,7 +13,8 @@
 			"*.m": "c",
 			"deque": "cpp",
 			"string": "cpp",
-			"vector": "cpp"
+			"vector": "cpp",
+			"random": "cpp"
 		},
 		"makefile.configureOnOpen": true,
 		"makefile.makefilePath": "./Makefile",
