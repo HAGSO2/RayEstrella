@@ -14,7 +14,7 @@ protected:
 public:
     UIElement(float x, float y, float width, float height);
     bool IsInside(Vector2);
-    virtual void IsOut();
+    virtual void IsOut() = 0;
     virtual void Draw() = 0;
     virtual void UpdateScreen(Vector2) = 0;
     virtual void UpdateKeyboard(KeyboardKey) = 0;
