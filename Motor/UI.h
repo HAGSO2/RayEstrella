@@ -12,7 +12,8 @@ public:
     UIElement(float x, float y, float width, float height);
     bool IsInside(Vector2);
     virtual void Draw() = 0;
-    virtual void Update(Vector2) = 0;
+    virtual void UpdateScreen(Vector2) = 0;
+    virtual void UpdateKeyboard(KeyboardKey) = 0;
 };
 
 class UI{ //Canvas
@@ -20,8 +21,10 @@ class UI{ //Canvas
     public:
     UI();
     void AddButton(float x, float y, float width, float height, char* s, Color c, void (*Func)(GameScreen & variable), GameScreen &meptr);
+    void AddTextBox(float x, float y, float width, float height, char* s, bool & enter);
     void Draw();
-    void Update(Vector2);
+    void UpdateScreen(Vector2);
+    void UpdateKeyboard(KeyboardKey);
 
 };
 
@@ -37,5 +40,18 @@ class SceneButton : public UIElement{
     private:
     //void (*funcPtr)()
     void (*ClickFunc)(GameScreen &);
-    void Update(Vector2);
+    void UpdateScreen(Vector2);
+    void UpdateKeyboard(KeyboardKey){};
+};
+
+class TextBox: public UIElement{
+    char* container;
+    bool &enterPressed;
+
+    public:
+    TextBox(float x, float y, float width, float height, char* s, bool & enter);
+    void Draw();
+    void UpdateScreen(Vector2) {};
+    void UpdateKeyboard(KeyboardKey);
+    void (*ClickFunc)();
 };

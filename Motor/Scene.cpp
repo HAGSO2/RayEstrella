@@ -151,7 +151,7 @@ void Tittle::UpdateScreen() {
 };
 
 void Tittle::OnMouseDown(){
-    canvas.Update(mousePosition);
+    canvas.UpdateScreen(mousePosition);
 };
 
 void Tittle::DrawScreen() {
