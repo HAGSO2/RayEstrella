@@ -1,6 +1,6 @@
 #include "Scene.h"
 
-Scene::Scene() :finishScreen{ UNKNOWN } {};
+Scene::Scene() :finishScreen{ UNKNOWN }, canvasUpdate{false}, canvas{UI()} {};
 
 void Scene::ManageInterruptions(){
     if(IsMouseButtonDown(0)){

@@ -11,6 +11,8 @@ class Scene {
 protected:
 	GameScreen finishScreen;
 	Vector2 mousePosition;
+	bool canvasUpdate;
+	UI canvas;
 	
 public:
 	Scene();
@@ -58,9 +60,6 @@ class Tittle : public Scene {
 	int framesCounter;
 	Font font;
 	int click;
-
-	UI canvas;
-
 	
 public:
 	Tittle(Font f);

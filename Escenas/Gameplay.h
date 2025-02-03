@@ -37,7 +37,6 @@ struct Node{
 };
 
 class Gameplay : public Scene{
-    // UI<Gameplay> canvas;
     Node nodes[CELL_Y][CELL_X];
     Sprite* cells[CELL_Y][CELL_X];
 
