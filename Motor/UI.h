@@ -25,7 +25,7 @@ class UI{ //Canvas
     public:
     UI();
     void AddButton(float x, float y, float width, float height, char* s, Color c, void (*Func)(GameScreen & variable), GameScreen &meptr);
-    void AddTextBox(float x, float y, float width, float height, char* s, bool & enter, bool & selec);
+    void AddTextBox(float x, float y, float width, float height, string& s, bool & enter, bool & selec);
     void Draw();
     void UpdateScreen(Vector2);
     void UpdateKeyboard(KeyboardKey);
@@ -50,14 +50,14 @@ class SceneButton : public UIElement{
 };
 
 class TextBox: public UIElement{
-    char* container;
+    string &container;
     bool &enterPressed;
     bool &selected;
 
     public:
-    TextBox(float x, float y, float width, float height, char* s, bool & enter, bool & selec);
+    TextBox(float x, float y, float width, float height, string& s, bool & enter, bool & selec);
     void IsOut() {selected = false;}
     void Draw();
-    void UpdateScreen(Vector2) {selected = true;};
+    void UpdateScreen(Vector2) {selected = !selected; WaitTime(0.1f);};
     void UpdateKeyboard(KeyboardKey);
 };

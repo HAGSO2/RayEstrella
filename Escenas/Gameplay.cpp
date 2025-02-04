@@ -2,7 +2,7 @@
 
 Node::Node(): type{DEFAULT}, visited{false}, weight{0}{};
 
-Gameplay::Gameplay() : nodes{}
+Gameplay::Gameplay() : nodes{}, Scene()
 {
     for(int i = 0; i < CELL_Y; i++){
         for(int j = 0; j < CELL_X; j++){

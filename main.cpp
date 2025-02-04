@@ -1,11 +1,12 @@
 #include <iostream>
 #include <raylib.h>
 #include "./Motor/Scene.h"
+#include "./Escenas/Tittle.h"
 #include "./Escenas/Gameplay.h"
 #include "./Escenas/EsDecrementable.h"
 
 GameScreen currentScreen;
-Scene* gameScenes[3] = {0};
+Scene* gameScenes[4] = {0};
 
 Font font = { 0 };
 Music music = { 0 };
@@ -66,6 +67,8 @@ static void InitStarters() {
     gameScenes[LOGO] = new Logo();
     gameScenes[TITTLE] = new Tittle(font);
     gameScenes[GAMEPLAY] = new Gameplay();
+    string texto ="";
+    gameScenes[DECREMENTABLE] = new EsDecrementable(texto);
 
     currentScreen = GameScreen(LOGO);
     
