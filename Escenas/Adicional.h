@@ -1,3 +1,6 @@
+#pragma once
+#include <string>
+
 enum CellType{
     DEFAULT = 0,
 	WAY = 1,
@@ -16,4 +19,10 @@ struct Node{
     public:
     Node();
 };
-//Implementación en gameplay cpp
+
+// struct TextBoxParams{
+//     std::string& texto;
+//     bool& enter;
+//     bool& selected;
+//     TextBoxParams(std::string& ref);
+// };

@@ -1,7 +1,5 @@
 #include "Gameplay.h"
 
-Node::Node(): type{DEFAULT}, visited{false}, weight{0}{};
-
 Gameplay::Gameplay() : nodes{}, Scene()
 {
     for(int i = 0; i < CELL_Y; i++){

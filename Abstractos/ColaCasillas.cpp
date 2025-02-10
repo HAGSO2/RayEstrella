@@ -3,7 +3,7 @@
 ColaCasillas::ColaCasillas(int max):ultimo{1}, monticulo{vector<pair<int,float>>(salto)}, posiciones{vector<int>(max+1,-1)}{}
 
 void ColaCasillas::Añadir(int elem, float w){
-    if(monticulo.size() == ultimo+1)
+    if((int)monticulo.size() == ultimo+1)
         Alargar();
     ultimo++;
     monticulo[ultimo] = pair<int,float>(elem,w);
@@ -12,7 +12,7 @@ void ColaCasillas::Añadir(int elem, float w){
 
 void ColaCasillas::Alargar(){
     vector<pair<int,float>> aux = vector<pair<int,float>>(monticulo.size()+salto);
-    for(int i = 0; i < monticulo.size(); i++){
+    for(int i = 0; i < (int)monticulo.size(); i++){
         aux[i] = monticulo[i];
     }
     monticulo = aux;

@@ -1,8 +1,9 @@
 #include "EsDecrementable.h"
 
-EsDecrementable::EsDecrementable(string& ref): lenth{ref}, Scene(), canvasUpdate{false}, selected{false}
+EsDecrementable::EsDecrementable(string& ref): lenth{""}, Scene(), canvasUpdate{false}, selected{false}, cola{ColaCasillas(10)}
 {
     canvas.AddTextBox(0,0,80,60,lenth,canvasUpdate,selected);
+    canvas.AddTextBox(0,65,80,60,lenth,canvasUpdate,selected);
 };
 
 void EsDecrementable::DrawScreen(){
@@ -12,8 +13,8 @@ void EsDecrementable::DrawScreen(){
 
 void EsDecrementable::UpdateScreen(){
     Scene::UpdateScreen();
-    // if(canvasUpdate) // Le he dado a enter en la textbox
-    //     TraceLog(LOG_DEBUG, lenth);
+    if(canvasUpdate) // Le he dado a enter en la textbox
+        TraceLog(LOG_DEBUG,"%s", lenth);
 };
 
 void EsDecrementable::OnMouseDown(){
