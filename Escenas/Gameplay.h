@@ -1,6 +1,7 @@
 #pragma once
 #include "../Motor/Scene.h"
 #include "../Motor/GameObject.h"
+#include "Adicional.h"
 
 #pragma once
 #pragma region Definitions
@@ -18,23 +19,6 @@
 #define END_COLOR PURPLE
 #pragma endregion
 
-enum CellType{
-    DEFAULT = 0,
-	WAY = 1,
-	UNUSED_WAY = 2,
-	HARDWALL = 3,
-	WALL = 4,
-	ENTRANCE = 5,
-	EXIT = 6
-};
-
-struct Node{
-    CellType type;
-    bool visited;
-    float weight;
-    public:
-    Node();
-};
 
 class Gameplay : public Scene{
     Node nodes[CELL_Y][CELL_X];

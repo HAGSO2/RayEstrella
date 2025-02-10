@@ -1,8 +1,11 @@
 #pragma once
+#include "Adicional.h"
 #include "../Motor/Scene.h"
+#include "../Abstractos/Cola.h"
 
 class EsDecrementable : public Scene{
     string& lenth;
+    Cola cola;
 
     bool canvasUpdate;
     bool selected;

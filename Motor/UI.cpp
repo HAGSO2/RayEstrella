@@ -22,7 +22,7 @@ void UI::Draw(){
 
 void UI::UpdateScreen(Vector2 mouseposition){
     int i = 0;
-    TraceLog(LOG_ALL,"Comprobando...");
+    // TraceLog(LOG_ALL,"Comprobando...");
     while (i < elements.size() && !elements[i]->IsInside(mouseposition))
     {
         elements[i]->IsOut();

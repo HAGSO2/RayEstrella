@@ -355,7 +355,7 @@ OBJ_DIR = obj
 SRC = $(call rwildcard, ./, *.cpp, *.h)
 #OBJS = $(SRC:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
 #OBJS = $(patsubst %.c,%.o,$(filter %.c,$(SRC)))
-OBJS=*.cpp ./Escenas/*.cpp ./Motor/*.cpp
+OBJS=*.cpp ./Escenas/*.cpp ./Motor/*.cpp ./Abstractos/*.cpp
 
 # For Android platform we call a custom Makefile.Android
 ifeq ($(PLATFORM),PLATFORM_ANDROID)
