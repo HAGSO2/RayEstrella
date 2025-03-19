@@ -68,7 +68,7 @@ static void InitStarters() {
     gameScenes[TITTLE] = new Tittle(font);
     gameScenes[GAMEPLAY] = new Gameplay();
     string texto ="";
-    gameScenes[DECREMENTABLE] = new EsDecrementable(texto);
+    gameScenes[DECREMENTABLE] = new EsDecrementable();
 
     currentScreen = GameScreen(LOGO);
     

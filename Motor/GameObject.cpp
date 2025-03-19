@@ -9,6 +9,13 @@ void Sprite::DrawObject(){
 }
 
 void Sprite::ChangeColor(Color c) {color = c;}
-// void Sprite::DrawTexture(){
-//     DrawTextureV()
-// }
+
+TextShape::TextShape(float x, float y, float width, float height, string txt, Color col):
+area{Rectangle{x,y,width,height}}, color{col}, text{txt}{}
+
+void TextShape::DrawObject(){
+    DrawRectangleRec(area,color);
+    DrawText(text.c_str(),area.x,area.y,10,BLACK);
+};
+
+void TextShape::ChangeColor(Color c) {color = c;}

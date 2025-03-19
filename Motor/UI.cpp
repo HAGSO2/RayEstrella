@@ -9,9 +9,9 @@ void UI::AddButton(float x, float y, float width, float height, char* s, Color c
     elements.push_back(new Button(x,y,width,height,s,c,Func,ptr));
 }
 
-void UI::AddTextBox(float x, float y, float width, float height)
+void UI::AddTextBox(float x, float y, float width, float height, string& reftxt)
  {
-    elements.push_back(new TextBox(x,y,width,height));
+    elements.push_back(new TextBox(x,y,width,height, reftxt));
  };
 
 
@@ -75,8 +75,8 @@ void Button::UpdateScreen(Vector2 p){
 
 #pragma region TextBox
 
-TextBox::TextBox(float x, float y, float width, float height): 
-UIElement(x,y,width,height), seleccionado{false}, texto{""} {};
+TextBox::TextBox(float x, float y, float width, float height, string& reftxt): 
+UIElement(x,y,width,height), seleccionado{false}, texto{reftxt}{};
 
 void TextBox::Draw(){
     if(!seleccionado)
@@ -91,7 +91,8 @@ void TextBox::UpdateScreen(Vector2){
 }
 
 void TextBox::UpdateKeyboard(KeyboardKey k){
-    if(seleccionado && KEY_A <= k && k <= KEY_Z){
+    if(seleccionado && KEY_A <= k && k <= KEY_Z ||
+        KEY_KP_0 <= k && k <= KEY_KP_9){
         texto.push_back((char)k);
     }
 }

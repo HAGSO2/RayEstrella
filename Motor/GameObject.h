@@ -1,5 +1,8 @@
 #pragma once
 #include <raylib.h>
+#include <string>
+
+using namespace std;
 
 class GameObject{
     Transform transform;
@@ -15,6 +18,16 @@ class Sprite : public GameObject{
     Color color;
 public:
     Sprite(Vector2 f, Vector2 s, Color c);
+    void ChangeColor(Color c);
+    void DrawObject();
+};
+
+class TextShape : public GameObject{
+    Rectangle area;
+    string text;
+    Color color;
+    public:
+    TextShape(float x, float y, float width, float height, string txt, Color col);
     void ChangeColor(Color c);
     void DrawObject();
 };
