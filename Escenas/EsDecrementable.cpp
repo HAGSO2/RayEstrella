@@ -2,7 +2,6 @@
 
 void ActualizaEscena(void* ptr){
     TraceLog(LOG_ALL,"Actualizando...");
-    WaitTime(1.1f);
     EsDecrementable* objeto = (EsDecrementable*)ptr;
     //Insertar
     //Se inserta un elemento con un nombre alltext[0], y una prioridad alltext[3]
@@ -20,9 +19,70 @@ void ActualizaEscena(void* ptr){
     objeto->RessetText();
 
     string cola = objeto->DevuelveCola();
-    TraceLog(LOG_DEBUG, cola.c_str());
+    //TraceLog(LOG_DEBUG, cola.c_str());
 
 };
+
+void EsDecrementable::InsertaElemento(){
+    InsertaElemento(alltext[0].c_str(), atoi(alltext[3].c_str()));
+};
+
+void EsDecrementable::NuevaCasilla(){
+
+};
+
+void EsDecrementable::InsertaElemento(const char* nombre, int prio){
+    int resta = (int)*nombre - (int)minimoLetra;
+    if(nombre != "" && resta > -1 ){
+        cola.Añadir( resta, prio);
+    }
+    RessetText();
+};
+
+void EsDecrementable::CambiaElemento(){
+    CambiaElemento(alltext[1].c_str(), atoi(alltext[4].c_str()));
+};
+
+void EsDecrementable::CambiaCasilla(){
+
+};
+
+void EsDecrementable::CambiaElemento(const char* nombre, int prio){
+    TraceLog(LOG_DEBUG,"Desde aquí");
+    //No tengo claro que esto vaya a funcionar como quiero
+    //Mi intención es que la letra a tenga el índice 0
+    int resta = (int)*nombre - (int)minimoLetra;
+    if(nombre != "" && resta > -1){
+        char charternombre = *nombre;
+        cola.Cambiar( resta, prio);
+    }
+        
+};
+
+void EsDecrementable::EliminaElemento(){
+    EliminaElemento(alltext[2].c_str());
+};
+
+void EsDecrementable::EliminaCasilla(){
+
+};
+
+void EsDecrementable::EliminaElemento(const char* nombre){
+    //No tengo claro que esto vaya a funcionar como quiero
+    //Mi intención es que la letra a tenga el índice 0
+    int resta = (int)*nombre - (int)minimoLetra;
+    if(nombre != "" && resta > -1){
+        char charternombre = *nombre;
+        cola.Eliminar( resta);
+    }
+};
+
+void EsDecrementable::RessetText(){
+    for(int i = 0; i < 5; i++){
+        alltext[i] = "";
+    }
+    
+}
 
 EsDecrementable::EsDecrementable(): Scene(), selected{false}, cola{ColaCasillas(CASILLAS)}
 //,casillas{nullptr}
@@ -68,58 +128,6 @@ void EsDecrementable::OnKeyPressed(KeyboardKey k){
             finishScreen = TITTLE;
         else
             canvas.UpdateKeyboard(k);
-    }
-    
-}
-
-void EsDecrementable::InsertaElemento(){
-    InsertaElemento(alltext[0].c_str(), atoi(alltext[3].c_str()));
-};
-
-void EsDecrementable::InsertaElemento(const char* nombre, int prio){
-    //No tengo claro que esto vaya a funcionar como quiero
-    //Mi intención es que la letra a tenga el índice 0
-    int resta = (int)*nombre - (int)minimoLetra;
-    TraceLog(LOG_ALL, "Letra %d, letra restada: %d\n Letra en char %s, Prioridad: %d",
-    (int)*nombre,resta, nombre, prio);
-    if(nombre != "" && resta > -1 ){
-        cola.Añadir( resta, prio);
-    }
-    RessetText();
-};
-
-void EsDecrementable::CambiaElemento(){
-    CambiaElemento(alltext[1].c_str(), atoi(alltext[4].c_str()));
-};
-
-void EsDecrementable::CambiaElemento(const char* nombre, int prio){
-    //No tengo claro que esto vaya a funcionar como quiero
-    //Mi intención es que la letra a tenga el índice 0
-    int resta = (int)*nombre - (int)minimoLetra;
-    if(nombre != ""){
-        char charternombre = *nombre;
-        cola.Cambiar( resta, prio);
-    }
-        
-};
-
-void EsDecrementable::EliminaElemento(){
-    EliminaElemento(alltext[2].c_str());
-};
-
-void EsDecrementable::EliminaElemento(const char* nombre){
-    //No tengo claro que esto vaya a funcionar como quiero
-    //Mi intención es que la letra a tenga el índice 0
-    int resta = (int)*nombre - (int)minimoLetra;
-    if(nombre != ""){
-        char charternombre = *nombre;
-        cola.Eliminar( resta);
-    }
-};
-
-void EsDecrementable::RessetText(){
-    for(int i = 0; i < 5; i++){
-        alltext[i] = "";
     }
     
 }

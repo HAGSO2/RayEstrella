@@ -1,0 +1,2 @@
+//TraceLog(LOG_ALL, "Letra %d, letra restada: %d\n Letra en char %s, Prioridad: %d",
+    //(int)*nombre,resta, nombre, prio);

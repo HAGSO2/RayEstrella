@@ -7,7 +7,6 @@ ColaCasillas::ColaCasillas(int max):ultimo{1}, monticulo{vector<pair<int,float>>
 void ColaCasillas::Añadir(int elem, float w){
     if((int)monticulo.size() == ultimo+1)
         Alargar();
-    TraceLog(LOG_DEBUG, "BAM!");
     monticulo[ultimo] = pair<int,float>(elem,w);
     posiciones[elem] = Flotar(ultimo);
     TraceLog(LOG_DEBUG, "BUM!");
