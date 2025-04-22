@@ -13,6 +13,7 @@ class EsDecrementable : public Scene{
     string alltext[5] = {"","","","",""};
     ColaCasillas cola;
     TextShape* casillas[CASILLAS];
+    int active;
     int velocidad = 1;
 
     bool selected;
@@ -33,7 +34,9 @@ class EsDecrementable : public Scene{
     void CambiaElemento();
     void EliminaElemento();
 
-    void ActualizaActores();
+    //Cada modelo cola, es un paso que deben seguir los actores
+
+    void ActualizaActores(const vector<ModeloCola*>& vect);
 
     string DevuelveCola() {return cola.ToString();}
 
@@ -44,9 +47,8 @@ class EsDecrementable : public Scene{
     void CambiaElemento(const char* nombre, int prio);
     void EliminaElemento(const char* nombre);
 
-    void NuevaCasilla();
-    void CambiaCasilla();
-    void EliminaCasilla();
+    void FijaNumeroActores(int num);
+    void FijaTextoActores(vector<string>);
     
     void CambiaVelocidad(int vel) {velocidad = vel;}
 

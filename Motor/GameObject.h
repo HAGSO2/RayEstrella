@@ -25,6 +25,7 @@ public:
 class TextShape : public GameObject{
     Rectangle area;
     string text;
+    int note;
     Color color;
     public:
     TextShape(float x, float y, float width, float height, string txt, Color col);

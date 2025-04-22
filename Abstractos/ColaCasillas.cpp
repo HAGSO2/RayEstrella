@@ -16,6 +16,14 @@ string ModeloCola::ToString(){
     }
 }
 
+vector<string> ModeloCola::SplitString(){
+    vector<string> mensaje;
+    for(int i = 0; i < monticulo.size(); i++){
+        mensaje.push_back("[" + to_string(monticulo[i].first) + "|" + to_string(monticulo[i].second) + "]");
+    }
+    return mensaje;
+}
+
 ColaCasillas::ColaCasillas(int max):ultimo{1}, 
 corazon{ModeloCola(max)}
 //monticulo{vector<pair<int,float>>(salto)}, posiciones{vector<int>(max+1,-1)}

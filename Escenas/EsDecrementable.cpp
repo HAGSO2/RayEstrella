@@ -14,7 +14,7 @@ void ActualizaEscena(void* ptr){
     objeto->EliminaElemento();
 
     //Finalmente actualizar
-    // objeto->ActualizaActores();
+    //objeto->ActualizaActores();
 
     objeto->RessetText();
 
@@ -27,10 +27,6 @@ void EsDecrementable::InsertaElemento(){
     InsertaElemento(alltext[0].c_str(), atoi(alltext[3].c_str()));
 };
 
-void EsDecrementable::NuevaCasilla(){
-
-};
-
 void EsDecrementable::InsertaElemento(const char* nombre, int prio){
     int resta = (int)*nombre - (int)minimoLetra;
     if(nombre != "" && resta > -1 ){
@@ -41,10 +37,6 @@ void EsDecrementable::InsertaElemento(const char* nombre, int prio){
 
 void EsDecrementable::CambiaElemento(){
     CambiaElemento(alltext[1].c_str(), atoi(alltext[4].c_str()));
-};
-
-void EsDecrementable::CambiaCasilla(){
-
 };
 
 void EsDecrementable::CambiaElemento(const char* nombre, int prio){
@@ -63,10 +55,6 @@ void EsDecrementable::EliminaElemento(){
     EliminaElemento(alltext[2].c_str());
 };
 
-void EsDecrementable::EliminaCasilla(){
-
-};
-
 void EsDecrementable::EliminaElemento(const char* nombre){
     //No tengo claro que esto vaya a funcionar como quiero
     //Mi intención es que la letra a tenga el índice 0
@@ -82,9 +70,47 @@ void EsDecrementable::RessetText(){
         alltext[i] = "";
     }
     
-}
+};
+//Si el compilador falla, quitar el const de aquí
+void EsDecrementable::ActualizaActores(const vector<ModeloCola*>& vect){
+    for(int i = 0; i < size(vect); i++){
+        FijaNumeroActores(size(vect[i]->monticulo));
+        FijaTextoActores(vect[i]->SplitString());
+        WaitTime(velocidad);
+    } 
+    
+};
 
-EsDecrementable::EsDecrementable(): Scene(), selected{false}, cola{ColaCasillas(CASILLAS)}
+void EsDecrementable::FijaNumeroActores(int num){
+    if(num > active){//Si hay que activar más:
+        while (num > active)
+        {
+            casillas[active]->ChangeColor(RED);
+            casillas[active]->ChangeText("");
+            active++;
+        }
+    }
+    else{
+        while (num > active)
+        {
+            casillas[active]->ChangeColor(BLACK);
+            casillas[active]->ChangeText("");
+            active--;
+        }
+        
+    }
+};
+
+//Tengo que hacer esto desde el principio para no tener
+// que mover los actores, cambio el texto y cambia el actor
+void EsDecrementable::FijaTextoActores(vector<string> nombr)
+{
+    for(int i = 0; i < active; i++){
+        casillas[i]->ChangeText(nombr[i]);
+    }
+};
+
+EsDecrementable::EsDecrementable(): Scene(), active{0}, selected{false}, cola{ColaCasillas(CASILLAS)}
 //,casillas{nullptr}
 {
     canvas.AddTextBox(90,0,80,60,alltext[0]);
@@ -108,7 +134,7 @@ void EsDecrementable::DrawScreen(){
     DrawText(fixedText[1].c_str(), 0,65,16,BLACK);
     DrawText(fixedText[2].c_str(), 0,135,16,BLACK);
     canvas.Draw();
-    for(int i = 0; i < CASILLAS ; i++){
+    for(int i = 0; i < active ; i++){
         casillas[i]->DrawObject();
     }
 };

@@ -19,6 +19,7 @@ struct ModeloCola{
     ModeloCola(int);
 
     string ToString();
+    vector<string> SplitString();
 };
 
 
