@@ -8,10 +8,10 @@ void ActualizaEscena(void* ptr){
     objeto->InsertaElemento();
 
     //Cambiar
-    objeto->CambiaElemento();
+    //objeto->CambiaElemento();
 
     //Eliminar
-    objeto->EliminaElemento();
+    //objeto->EliminaElemento();
 
     //Finalmente actualizar
     objeto->ActualizaActores();
@@ -33,8 +33,8 @@ void EsDecrementable::InsertaElemento(const char* nombre, int prio){
     int resta = (int)*nombre - (int)minimoLetra;
     if(nombre != "" && resta > -1 ){
         cola.Añadir( resta, prio);
-    }
-    RessetText();
+        active++;
+    };
 };
 
 void EsDecrementable::CambiaElemento(){
@@ -78,8 +78,10 @@ void EsDecrementable::RessetText(){
 
 #pragma region Actor managment
 void EsDecrementable::ActualizaActores(){
+    //Cuando quiera que se haga en diferentes pasos, hay que revisar esta línea
     vector<ModeloCola*> vect = {cola.DevuelveActual()};
-    for(int i = 0; i < sizeof(vect); i++){
+    //->
+    for(int i = 0; i < vect.size(); i++){
         FijaNumeroActores(sizeof(vect[i]->monticulo));
         FijaTextoActores(vect[i]->SplitString());
         WaitTime(velocidad);
@@ -88,23 +90,16 @@ void EsDecrementable::ActualizaActores(){
 };
 
 void EsDecrementable::FijaNumeroActores(int num){
-    if(num > active){//Si hay que activar más:
-        while (num > active)
-        {
-            casillas[active]->ChangeColor(RED);
-            casillas[active]->ChangeText("");
-            active++;
+    for(int i = 0; i < CASILLAS; i++){
+        if(i < active){
+            casillas[i]->ChangeColor(RED);
+            casillas[i]->ChangeText("");
         }
-    }
-    else{
-        while (num > active)
-        {
-            casillas[active]->ChangeColor(BLACK);
-            casillas[active]->ChangeText("");
-            active--;
+        else{
+            casillas[i]->ChangeColor(GRAY);
+            casillas[i]->ChangeText("");
         }
-        
-    }
+    };
 };
 
 //Tengo que hacer esto desde el principio para no tener
@@ -112,6 +107,7 @@ void EsDecrementable::FijaNumeroActores(int num){
 void EsDecrementable::FijaTextoActores(vector<string> nombr)
 {
     for(int i = 0; i < active; i++){
+        //TraceLog(LOG_DEBUG,nombr[i].c_str());
         casillas[i]->ChangeText(nombr[i]);
     }
 };
@@ -130,7 +126,7 @@ EsDecrementable::EsDecrementable(): Scene(), active{0}, selected{false}, cola{Co
     canvas.AddButton(360,0,80,60,"Actualizar",RED,ActualizaEscena,this);
     for(int i = 0; i < 3; i++){//3x8 = 24
         for(int j = 0; j < 8; j++){
-            casillas[j+i*8] = new TextShape{75*j+75,220 + i*75,50,50,"",BLACK};
+            casillas[j+i*8] = new TextShape{75*j+75,220 + i*75,50,50,"",GRAY};
         }
     }
     casillas[24] = new TextShape{75,220+3*75,50,50,"",BLACK};

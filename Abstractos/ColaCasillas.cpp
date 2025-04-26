@@ -18,7 +18,7 @@ string ModeloCola::ToString(){
 
 vector<string> ModeloCola::SplitString(){
     vector<string> mensaje;
-    for(int i = 0; i < monticulo.size(); i++){
+    for(int i = 1; i < monticulo.size(); i++){
         mensaje.push_back("[" + to_string(monticulo[i].first) + "|" + to_string(monticulo[i].second) + "]");
     }
     return mensaje;
