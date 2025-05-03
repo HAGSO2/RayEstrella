@@ -1,24 +1,24 @@
 #include "EsDecrementable.h"
 
 void ActualizaEscena(void* ptr){
-    TraceLog(LOG_ALL,"Actualizando...");
     EsDecrementable* objeto = (EsDecrementable*)ptr;
     //Insertar
     //Se inserta un elemento con un nombre alltext[0], y una prioridad alltext[3]
     objeto->InsertaElemento();
 
     //Cambiar
-    //objeto->CambiaElemento();
+    objeto->CambiaElemento();
 
     //Eliminar
-    //objeto->EliminaElemento();
+    objeto->EliminaElemento();
 
     //Finalmente actualizar
     objeto->ActualizaActores();
 
+    //Pone los textbox vacíos
     objeto->RessetText();
 
-    string cola = objeto->DevuelveCola();
+    //string cola = objeto->DevuelveCola();
     //TraceLog(LOG_DEBUG, cola.c_str());
 
 };
@@ -42,12 +42,8 @@ void EsDecrementable::CambiaElemento(){
 };
 
 void EsDecrementable::CambiaElemento(const char* nombre, int prio){
-    TraceLog(LOG_DEBUG,"Desde aquí");
-    //No tengo claro que esto vaya a funcionar como quiero
-    //Mi intención es que la letra a tenga el índice 0
     int resta = (int)*nombre - (int)minimoLetra;
     if(nombre != "" && resta > -1){
-        char charternombre = *nombre;
         cola.Cambiar( resta, prio);
     }
         
@@ -58,13 +54,13 @@ void EsDecrementable::EliminaElemento(){
 };
 
 void EsDecrementable::EliminaElemento(const char* nombre){
-    //No tengo claro que esto vaya a funcionar como quiero
-    //Mi intención es que la letra a tenga el índice 0
     int resta = (int)*nombre - (int)minimoLetra;
     if(nombre != "" && resta > -1){
-        char charternombre = *nombre;
         cola.Eliminar( resta);
+        active--;
     }
+    string cola = DevuelveCola();
+    TraceLog(LOG_DEBUG, cola.c_str());
 };
 
 void EsDecrementable::RessetText(){
@@ -82,14 +78,14 @@ void EsDecrementable::ActualizaActores(){
     vector<ModeloCola*> vect = {cola.DevuelveActual()};
     //->
     for(int i = 0; i < vect.size(); i++){
-        FijaNumeroActores(sizeof(vect[i]->monticulo));
+        FijaNumeroActores();
         FijaTextoActores(vect[i]->SplitString());
-        WaitTime(velocidad);
+        //WaitTime(velocidad);
     } 
     
 };
 
-void EsDecrementable::FijaNumeroActores(int num){
+void EsDecrementable::FijaNumeroActores(){
     for(int i = 0; i < CASILLAS; i++){
         if(i < active){
             casillas[i]->ChangeColor(RED);
@@ -106,7 +102,7 @@ void EsDecrementable::FijaNumeroActores(int num){
 // que mover los actores, cambio el texto y cambia el actor
 void EsDecrementable::FijaTextoActores(vector<string> nombr)
 {
-    for(int i = 0; i < active; i++){
+    for(int i = 0; i < nombr.size(); i++){
         //TraceLog(LOG_DEBUG,nombr[i].c_str());
         casillas[i]->ChangeText(nombr[i]);
     }

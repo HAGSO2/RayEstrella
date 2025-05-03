@@ -98,7 +98,7 @@ void TextBox::UpdateKeyboard(KeyboardKey k){
     (KEY_0 <= k && KEY_9 <= k) ||
     (KEY_KP_0 <= k && k <= KEY_KP_9)))
     {
-        TraceLog(LOG_ALL,"%d",(int)k);
+        //TraceLog(LOG_ALL,"%d",(int)k);
         if(k > 320 && k < 329){
             texto.push_back((char)k-272);
         }

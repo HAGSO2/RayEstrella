@@ -34,7 +34,7 @@ public:
     //El punt es el puntero al elemento
     void Añadir(int ind, float w); //log(n)
     void Eliminar(int elem);
-    int Cambiar(int ind, float w);
+    void Cambiar(int ind, float w);
     int MirarMínimo();
     ModeloCola* DevuelveActual() {return &corazon;}
     string ToString();

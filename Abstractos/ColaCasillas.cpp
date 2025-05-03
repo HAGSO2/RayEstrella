@@ -19,7 +19,10 @@ string ModeloCola::ToString(){
 vector<string> ModeloCola::SplitString(){
     vector<string> mensaje;
     for(int i = 1; i < monticulo.size(); i++){
-        mensaje.push_back("[" + to_string(monticulo[i].first) + "|" + to_string(monticulo[i].second) + "]");
+        char c = (char)(monticulo[i].first+65);
+        string aux = "[";
+        aux.push_back(c);
+        mensaje.push_back(aux + "|" + to_string(monticulo[i].second) + "]");
     }
     return mensaje;
 }
@@ -34,7 +37,6 @@ void ColaCasillas::Añadir(int elem, float w){
         Alargar();
     corazon.monticulo[ultimo] = pair<int,float>(elem,w);
     corazon.posiciones[elem] = Flotar(ultimo);
-    TraceLog(LOG_DEBUG, "BUM!");
     ultimo++;
 };
 
@@ -47,25 +49,29 @@ void ColaCasillas::Alargar(){
 };
 
 void ColaCasillas::Eliminar(int elem){
-    corazon.monticulo[elem] = corazon.monticulo[ultimo];
+    int ind = corazon.posiciones[elem];
+    corazon.posiciones[elem] = -1;
     ultimo--;
-    Hundir(1);
+    corazon.monticulo[ind] = corazon.monticulo[ultimo];
+    int otrapos = corazon.monticulo[ultimo].first;
+    corazon.posiciones[otrapos] = Hundir(1);
 
 };
 
-int ColaCasillas::Cambiar(int ind, float w){
+void ColaCasillas::Cambiar(int elem, float w){
+    int ind = corazon.posiciones[elem];
     float antiguo = corazon.monticulo[ind].second;
     corazon.monticulo[ind].second = w;
     if(antiguo > w){
-        return Flotar(ind);
+        corazon.posiciones[elem] = Flotar(ind);
     }
     else{
-        return Hundir(ind);
+        corazon.posiciones[elem] = Hundir(ind);
     }
-    return ind;
 };
 
 int ColaCasillas::Hundir(int i){
+    TraceLog(LOG_DEBUG,"Posición: %d, Cuál: %d",i,corazon.monticulo[i].first);
     if(i == ultimo || i*2 >= ultimo)
         return i;
     else{
@@ -73,10 +79,14 @@ int ColaCasillas::Hundir(int i){
         if(hijo+1 < ultimo && corazon.monticulo[hijo].second > corazon.monticulo[hijo+1].second)
             hijo++;
         if(corazon.monticulo[hijo].second > corazon.monticulo[i].second){
-            corazon.posiciones[corazon.monticulo[hijo].second] = i;
+            /*
+            * <A,32> -> (<C,2>|<V,4>) ==> 
+            *   <C,2> -> (<A,32|<V,4>)
+            */
             pair<int,float> aux = corazon.monticulo[hijo];
             corazon.monticulo[hijo] = corazon.monticulo[i];
             corazon.monticulo[i] = aux;
+            corazon.posiciones[aux.first] = i;
             return Hundir(hijo);
         }
         
@@ -86,14 +96,14 @@ int ColaCasillas::Hundir(int i){
 };
 
 int ColaCasillas::Flotar(int i){
-    TraceLog(LOG_DEBUG, "Flotando desde %d",i);
+    //TraceLog(LOG_DEBUG, "Flotando desde %d",i);
     //¡Flota varias veces sin motivo!
     int padre = i/2;
     if(i == 1){
         return 1;
     }
     else if(corazon.monticulo[padre].second > corazon.monticulo[i].second){
-        corazon.posiciones[corazon.monticulo[padre].second] = i;
+        corazon.posiciones[corazon.monticulo[padre].first] = i;
         pair<int,float> aux = corazon.monticulo[padre];
         corazon.monticulo[padre] = corazon.monticulo[i];
         corazon.monticulo[i] = aux;

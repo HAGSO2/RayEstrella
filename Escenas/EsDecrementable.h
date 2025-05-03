@@ -47,7 +47,7 @@ class EsDecrementable : public Scene{
     void CambiaElemento(const char* nombre, int prio);
     void EliminaElemento(const char* nombre);
 
-    void FijaNumeroActores(int num);
+    void FijaNumeroActores();
     void FijaTextoActores(vector<string>);
     
     void CambiaVelocidad(int vel) {velocidad = vel;}
