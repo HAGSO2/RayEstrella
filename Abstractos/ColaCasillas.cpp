@@ -54,7 +54,7 @@ void ColaCasillas::Eliminar(int elem){
     ultimo--;
     corazon.monticulo[ind] = corazon.monticulo[ultimo];
     int otrapos = corazon.monticulo[ultimo].first;
-    corazon.posiciones[otrapos] = Hundir(1);
+    corazon.posiciones[otrapos] = Hundir(ind);
 
 };
 

@@ -13,9 +13,9 @@ enum CellType{
 
 struct Node{
     CellType type;
-    bool visited;
     int index;
-    float weight;
+    float F;
+    int G;
     public:
     Node();
 };
