@@ -49,9 +49,7 @@ void ColaCasillas::Alargar(){
 };
 
 void ColaCasillas::Eliminar(int elem){
-    TraceLog(LOG_DEBUG, "Eliminando elemento: %d",elem);
     int ind = corazon.posiciones[elem];
-    TraceLog(LOG_DEBUG,"Posición: %d",ind);
     corazon.posiciones[elem] = -1;
     ultimo--;
     corazon.monticulo[ind] = corazon.monticulo[ultimo];
@@ -59,7 +57,6 @@ void ColaCasillas::Eliminar(int elem){
     corazon.monticulo[ultimo] = pair<int,float>(0,0);
     int pos = Hundir(ind);
     corazon.posiciones[otrapos] = pos;
-    TraceLog(LOG_DEBUG,"Ha quedado en la posición: %d",corazon.posiciones[otrapos]);
 };
 
 void ColaCasillas::Cambiar(int elem, float w){
@@ -72,20 +69,13 @@ void ColaCasillas::Cambiar(int elem, float w){
     else{
         corazon.posiciones[elem] = Hundir(ind);
     }
-    TraceLog(LOG_DEBUG,"He cambiado %d a %f",corazon.monticulo[ind].first,corazon.monticulo[ind].second)
 };
 
 int ColaCasillas::Hundir(int i){
-    TraceLog(LOG_DEBUG,"Posición: %d, Cuál: %d",i,corazon.monticulo[i].first);
     if(i == ultimo){
-        TraceLog(LOG_DEBUG,"Me hundo en: %d (a la primera)",i);
         return i;
-    }     //Si es mayor que último tengo que ver
-    else if(i > ultimo){
-        TraceLog(LOG_DEBUG,"Me hundo en: %d (superando el último)",i/2);
-        return i/2;
-    }   
-    else{
+    }
+    else if ((i*2) < ultimo){
         int hijo = i*2;
         if(hijo+1 < ultimo && corazon.monticulo[hijo].second > corazon.monticulo[hijo+1].second)
             hijo++;
@@ -94,23 +84,23 @@ int ColaCasillas::Hundir(int i){
             * <A,32> -> (<C,2>|<V,4>) ==> 
             *   <C,2> -> (<A,32|<V,4>)
             */
-            TraceLog(LOG_DEBUG,"Pair: <%d,%d>",corazon.monticulo[hijo].first,corazon.monticulo[hijo].second);
             corazon.posiciones[corazon.monticulo[hijo].first] = i;
             pair<int,float> aux = corazon.monticulo[hijo];
             corazon.monticulo[hijo] = corazon.monticulo[i];
             corazon.monticulo[i] = aux;
-            TraceLog(LOG_DEBUG,"Pair: <%d,%d>",corazon.monticulo[hijo].first,corazon.monticulo[hijo].second);
             return Hundir(hijo);
         }
         
-    }
-    TraceLog(LOG_DEBUG,"Me hundo en: %d",i);
+    }     //Si es mayor que último tengo que ver
+    else if(i > ultimo){
+        return i/2;
+    }   
+    
     return i;
     
 };
 
 int ColaCasillas::Flotar(int i){
-    TraceLog(LOG_DEBUG, "Flotando desde %d",i);
     //¡Flota varias veces sin motivo!
     int padre = i/2;
     if(i == 1){

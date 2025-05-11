@@ -44,7 +44,7 @@ void EsDecrementable::CambiaElemento(){
 void EsDecrementable::CambiaElemento(const char* nombre, int prio){
     int resta = (int)*nombre - (int)minimoLetra;
     if(nombre != "" && resta > -1){
-        TraceLog(LOG_DEBUG,"Cambiando: %d a %d",resta, prio);
+        //TraceLog(LOG_DEBUG,"Cambiando: %d a %d",resta, prio);
         cola.Cambiar( resta, prio);
     }
         
@@ -57,12 +57,10 @@ void EsDecrementable::EliminaElemento(){
 void EsDecrementable::EliminaElemento(const char* nombre){
     int resta = (int)*nombre - (int)minimoLetra;
     if(nombre != "" && resta > -1){
-        TraceLog(LOG_DEBUG,"Eliminando: %d",resta);
+        //TraceLog(LOG_DEBUG,"Eliminando: %d",resta);
         cola.Eliminar( resta);
         active--;
     }
-    string cola = DevuelveCola();
-    TraceLog(LOG_DEBUG, cola.c_str());
 };
 
 void EsDecrementable::RessetText(){
