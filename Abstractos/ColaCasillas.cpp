@@ -39,8 +39,14 @@ corazon{ModeloCola(max)}
 void ColaCasillas::Añadir(int elem, float w){
     if((int)corazon.monticulo.size() == ultimo+1)
         Alargar();
-    corazon.monticulo[ultimo] = pair<int,float>(elem,w);
-    corazon.posiciones[elem] = Flotar(ultimo);
+    if(corazon.posiciones[elem] != -1){
+        corazon.monticulo[ultimo] = pair<int,float>(elem,w);
+        corazon.posiciones[elem] = Flotar(ultimo);
+    }
+    else if(corazon.monticulo[corazon.posiciones[elem]].second > w){
+        Cambiar(elem, w);
+    };
+    
     ultimo++;
 };
 
