@@ -3,9 +3,11 @@
 using namespace std;
 
 #pragma region Modelo
-ModeloCola::ModeloCola(int max): monticulo{vector<pair<int,float>>(salto)}, posiciones{vector<int>(max+1,-1)}{};
+template<typename t>
+ModeloCola<t>::ModeloCola(int max): monticulo{vector<pair<t,float>>(salto)}, posiciones{vector<int>(max+1,-1)}{};
 
-string ModeloCola::ToString(){
+template<typename t>
+string ModeloCola<t>::ToString(){
     string mensaje;
     for(int i = 0; i < monticulo.size(); i++){
         pair<int,float> elem = monticulo[i];
@@ -17,7 +19,8 @@ string ModeloCola::ToString(){
     }
 }
 
-vector<string> ModeloCola::SplitString(){
+template <typename t>
+vector<string> ModeloCola<t>::SplitString(){
     vector<string> mensaje;
     for(int i = 1; i < monticulo.size(); i++){
         char c = (char)(monticulo[i].first+65);
@@ -31,16 +34,18 @@ vector<string> ModeloCola::SplitString(){
 
 
 #pragma region Cola Casillas
-ColaCasillas::ColaCasillas(int max):ultimo{1}, 
+template <typename t>
+ColaCasillas<t>::ColaCasillas(int max):ultimo{1}, 
 corazon{ModeloCola(max)}
 //monticulo{vector<pair<int,float>>(salto)}, posiciones{vector<int>(max+1,-1)}
 {};
 
-void ColaCasillas::Añadir(int elem, float w){
+template<typename t>
+void ColaCasillas<t>::Añadir(t elem, float w){
     if((int)corazon.monticulo.size() == ultimo+1)
         Alargar();
     if(corazon.posiciones[elem] != -1){
-        corazon.monticulo[ultimo] = pair<int,float>(elem,w);
+        corazon.monticulo[ultimo] = pair<t,float>(elem,w);
         corazon.posiciones[elem] = Flotar(ultimo);
     }
     else if(corazon.monticulo[corazon.posiciones[elem]].second > w){
@@ -50,26 +55,29 @@ void ColaCasillas::Añadir(int elem, float w){
     ultimo++;
 };
 
-void ColaCasillas::Alargar(){
-    vector<pair<int,float>> aux = vector<pair<int,float>>(corazon.monticulo.size()+salto);
+template<typename t>
+void ColaCasillas<t>::Alargar(){
+    vector<pair<t,float>> aux = vector<pair<t,float>>(corazon.monticulo.size()+salto);
     for(int i = 0; i < (int)corazon.monticulo.size(); i++){
         aux[i] = corazon.monticulo[i];
     }
     corazon.monticulo = aux;
 };
 
-void ColaCasillas::Eliminar(int elem){
-    int ind = corazon.posiciones[elem];
-    corazon.posiciones[elem] = -1;
+template<typename t>
+void ColaCasillas<t>::Eliminar(t elem){
+    int ind = corazon.posiciones[(int)elem];
+    corazon.posiciones[(int)elem] = -1;
     ultimo--;
     corazon.monticulo[ind] = corazon.monticulo[ultimo];
     int otrapos = corazon.monticulo[ind].first;
-    corazon.monticulo[ultimo] = pair<int,float>(0,0);
+    corazon.monticulo[ultimo] = pair<t,float>(0,0);
     int pos = Hundir(ind);
     corazon.posiciones[otrapos] = pos;
 };
 
-void ColaCasillas::Cambiar(int elem, float w){
+template<typename t>
+void ColaCasillas<t>::Cambiar(t elem, float w){
     int ind = corazon.posiciones[elem];
     float antiguo = corazon.monticulo[ind].second;
     corazon.monticulo[ind].second = w;
@@ -80,11 +88,13 @@ void ColaCasillas::Cambiar(int elem, float w){
         corazon.posiciones[elem] = Hundir(ind);
     }
 };
+template<typename t>
+t ColaCasillas<t>::MirarMínimo(){return corazon.monticulo[1].first;};
+template<typename t>
+void ColaCasillas<t>::EliminaMínimo(){Eliminar(1);};
 
-int ColaCasillas::MirarMínimo(){return corazon.monticulo[1].first;};
-void ColaCasillas::EliminaMínimo(){Eliminar(1);};
-
-string ColaCasillas::ToString(){
+template<typename t>
+string ColaCasillas<t>::ToString(){
     string queue = "Montículo: \n";
     for(int i = 1; i < corazon.monticulo.size(); i++){
         queue.append( to_string(corazon.monticulo[i].first) + "|" + to_string(corazon.monticulo[i].second) + "\n");
@@ -97,7 +107,8 @@ string ColaCasillas::ToString(){
 }
 
 #pragma region Cola interno
-int ColaCasillas::Hundir(int i){
+template<typename t>
+int ColaCasillas<t>::Hundir(int i){
     if(i == ultimo){
         return i;
     }
@@ -126,7 +137,8 @@ int ColaCasillas::Hundir(int i){
     
 };
 
-int ColaCasillas::Flotar(int i){
+template<typename t>
+int ColaCasillas<t>::Flotar(int i){
     //¡Flota varias veces sin motivo!
     int padre = i/2;
     if(i == 1){
