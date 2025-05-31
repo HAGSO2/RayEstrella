@@ -2,44 +2,42 @@
 
 
 
-AStar::AStar(Node (&tabl)[CELL_Y][CELL_X]): tabletop{tabl}, cola{ColaCasillas(CELL_X*CELL_Y)}, 
-steps{0},currentPosition{NodePos{Vector2{0,0},nullptr}},  open{vector<NodePos>()}, closed{vector<NodePos>()}
+AStar::AStar(Node (&tabl)[CELL_Y][CELL_X]): tabletop{tabl}, cola{ColaCasillas<Node*>(CELL_X*CELL_Y)}, 
+steps{0},currentPosition{nullptr},  open{vector<Node*>()}, closed{vector<Node*>()}
 {};
 
-vector<Node> AStar::Pathfinding(Vector2 source, Vector2 target){
-    vector<Node> finalList;
-    open = vector<NodePos>();
-    closed = vector<NodePos>();
+vector<Node*> AStar::Pathfinding(Position2 source, Position2 target){
+    open = vector<Node*>();
+    closed = vector<Node*>();
 
-    currentPosition.pos = source;
+    currentPosition = tabletop[source.j,source.i];
     open.push_back(currentPosition);
 
-    while (currentPosition.pos.x != target.x && currentPosition.pos.y != target.y)
+    while (currentPosition->position.j != target.j && currentPosition->position.i != target.i)
     {
         /* code */
         Step(target);
         steps++;
     }
-    
-    
-
-    return finalList;
+    return closed;
 }
 
-void AStar::Step(Vector2 target){
+void AStar::Step(Position2 target){
     CalcNeightbours();
     for(int i = 0; i < open.size(); i++){
-        cola.Añadir(open[i], Heuristic(open[i].pos,target));
+        cola.Añadir(open[i], Heuristic(open[i]->position,target));
     };
-    int cual = cola.MirarMínimo();
+    Node* best = cola.MirarMínimo();
     cola.EliminaMínimo();
-    open = vector<NodePos>();
-    
+    closed.push_back(best);
+    open = vector<Node*>();
+    currentPosition = best;
 
 };
 
-float AStar::Heuristic(Vector2 s, Vector2 t){
-    return Vector2Distance(s,t) + steps;
+float AStar::Heuristic(Position2 s, Position2 t){
+    float result = sqrtf((s.j - t.j)*(s.j - t.j) + (s.i - t.i)*(s.i - t.i));
+    return result + steps;
 };
 
 /*  
@@ -62,57 +60,57 @@ void AStar::CalcNeightbours(){
     // }
     //O
     //`C
-    if((currentPosition.pos.x > 0 && currentPosition.pos.y > 0) &&
-    tabletop[(int)currentPosition.pos.x-1][(int)currentPosition.pos.y-1].type != WALL ||
-    tabletop[(int)currentPosition.pos.x-1][(int)currentPosition.pos.y-1].type != HARDWALL){
-        open.push_back(currentPosition);
+    if((currentPosition->position.j > 0 && currentPosition->position.i > 0) &&
+    tabletop[currentPosition->position.j-1][currentPosition->position.i-1].type != WALL ||
+    tabletop[currentPosition->position.j-1][currentPosition->position.i-1].type != HARDWALL){
+        open.push_back(&tabletop[currentPosition->position.j-1][currentPosition->position.i-1]);
     }
     //O
     //ĉ
-    if((currentPosition.pos.y > 0 ) &&
-    tabletop[(int)currentPosition.pos.x][(int)currentPosition.pos.y-1].type != WALL ||
-    tabletop[(int)currentPosition.pos.x][(int)currentPosition.pos.y-1].type != HARDWALL){
-        open.push_back(currentPosition);
+    if((currentPosition->position.i > 0 ) &&
+    tabletop[currentPosition->position.j][currentPosition->position.i-1].type != WALL ||
+    tabletop[currentPosition->position.j][currentPosition->position.i-1].type != HARDWALL){
+        open.push_back(&tabletop[currentPosition->position.j][currentPosition->position.i-1]);
     }
     // O
     //Ć
-    if((currentPosition.pos.y > 0 && currentPosition.pos.x < CELL_X-1) &&
-    tabletop[(int)currentPosition.pos.x+1][(int)currentPosition.pos.y-1].type != WALL ||
-    tabletop[(int)currentPosition.pos.x+1][(int)currentPosition.pos.y-1].type != HARDWALL){
-        open.push_back(currentPosition);
+    if((currentPosition->position.i > 0 && currentPosition->position.j < CELL_X-1) &&
+    tabletop[currentPosition->position.j+1][currentPosition->position.i-1].type != WALL ||
+    tabletop[currentPosition->position.j+1][currentPosition->position.i-1].type != HARDWALL){
+        open.push_back(&tabletop[currentPosition->position.j+1][currentPosition->position.i-1]);
     }
     //O < C
-    if((currentPosition.pos.x > 0) &&
-    tabletop[(int)currentPosition.pos.x-1][(int)currentPosition.pos.y].type != WALL ||
-    tabletop[(int)currentPosition.pos.x-1][(int)currentPosition.pos.y].type != HARDWALL){
-        open.push_back(currentPosition);
+    if((currentPosition->position.j > 0) &&
+    tabletop[currentPosition->position.j-1][currentPosition->position.i].type != WALL ||
+    tabletop[currentPosition->position.j-1][currentPosition->position.i].type != HARDWALL){
+        open.push_back(&tabletop[currentPosition->position.j-1][currentPosition->position.i]);
     }
     //C > O
-    if((currentPosition.pos.x < CELL_X-1) &&
-    tabletop[(int)currentPosition.pos.x+1][(int)currentPosition.pos.y].type != WALL ||
-    tabletop[(int)currentPosition.pos.x+1][(int)currentPosition.pos.y].type != HARDWALL){
-        open.push_back(currentPosition);
+    if((currentPosition->position.j < CELL_X-1) &&
+    tabletop[currentPosition->position.j+1][currentPosition->position.i].type != WALL ||
+    tabletop[currentPosition->position.j+1][currentPosition->position.i].type != HARDWALL){
+        open.push_back(&tabletop[currentPosition->position.j+1][currentPosition->position.i]);
     }
     // C
     //Ó
-    if((currentPosition.pos.x > 0 && currentPosition.pos.y < CELL_Y-1) &&
-    tabletop[(int)currentPosition.pos.x-1][(int)currentPosition.pos.y+1].type != WALL ||
-    tabletop[(int)currentPosition.pos.x-1][(int)currentPosition.pos.y+1].type != HARDWALL){
-        open.push_back(currentPosition);
+    if((currentPosition->position.j > 0 && currentPosition->position.i < CELL_Y-1) &&
+    tabletop[currentPosition->position.j-1][currentPosition->position.i+1].type != WALL ||
+    tabletop[currentPosition->position.j-1][currentPosition->position.i+1].type != HARDWALL){
+        open.push_back(&tabletop[currentPosition->position.j-1][currentPosition->position.i+1]);
     }
     //C
     //V
     //O
-    if((currentPosition.pos.y < CELL_Y-1) &&
-    tabletop[(int)currentPosition.pos.x][(int)currentPosition.pos.y+1].type != WALL ||
-    tabletop[(int)currentPosition.pos.x][(int)currentPosition.pos.y+1].type != HARDWALL){
-        open.push_back(currentPosition);
+    if((currentPosition->position.i < CELL_Y-1) &&
+    tabletop[currentPosition->position.j][currentPosition->position.i+1].type != WALL ||
+    tabletop[currentPosition->position.j][currentPosition->position.i+1].type != HARDWALL){
+        open.push_back(&tabletop[currentPosition->position.j][currentPosition->position.i+1]);
     }
     //C
     // Ò
-    if((currentPosition.pos.x < CELL_X-1 && currentPosition.pos.y < CELL_Y-1) &&
-    tabletop[(int)currentPosition.pos.x+1][(int)currentPosition.pos.y+1].type != WALL ||
-    tabletop[(int)currentPosition.pos.x+1][(int)currentPosition.pos.y+1].type != HARDWALL){
-        open.push_back(currentPosition);
+    if((currentPosition->position.j < CELL_X-1 && currentPosition->position.i < CELL_Y-1) &&
+    tabletop[currentPosition->position.j+1][currentPosition->position.i+1].type != WALL ||
+    tabletop[currentPosition->position.j+1][currentPosition->position.i+1].type != HARDWALL){
+        open.push_back(&tabletop[currentPosition->position.j+1][currentPosition->position.i+1]);
     }
 }

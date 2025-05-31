@@ -122,7 +122,7 @@ int ColaCasillas<t>::Hundir(int i){
             *   <C,2> -> (<A,32|<V,4>)
             */
             corazon.posiciones[corazon.monticulo[hijo].first] = i;
-            pair<int,float> aux = corazon.monticulo[hijo];
+            pair<t,float> aux = corazon.monticulo[hijo];
             corazon.monticulo[hijo] = corazon.monticulo[i];
             corazon.monticulo[i] = aux;
             return Hundir(hijo);
@@ -146,7 +146,7 @@ int ColaCasillas<t>::Flotar(int i){
     }
     else if(corazon.monticulo[padre].second > corazon.monticulo[i].second){
         corazon.posiciones[corazon.monticulo[padre].first] = i;
-        pair<int,float> aux = corazon.monticulo[padre];
+        pair<t,float> aux = corazon.monticulo[padre];
         corazon.monticulo[padre] = corazon.monticulo[i];
         corazon.monticulo[i] = aux;
         return Flotar(padre);

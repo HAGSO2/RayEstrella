@@ -14,7 +14,7 @@ void Gameplay::InitScene()
 {
     for(int i = 0,z = 0; i < CELL_Y; i++){
         for(int j = 0; j < CELL_X; j++){
-            nodes[i][j].position = Vector2{(float)i,(float)j};
+            nodes[i][j].position = Position2{i,j};
             nodes[i][j].index = z;
             if(i == 0 || j == 0 || i == CELL_Y-1 || j == CELL_X-1){
                 nodes[i][j].type = HARDWALL;

@@ -1,6 +1,7 @@
 #pragma once
 #include <vector>
 #include <string>
+#include "Adicional.h"
 
 using namespace std;
 
@@ -26,7 +27,7 @@ struct ModeloCola{
 template<typename t>
 class ColaCasillas{
 protected:
-    ModeloCola corazon;
+    ModeloCola<t> corazon;
     int ultimo;
 public:
     ColaCasillas(int t);
@@ -38,10 +39,10 @@ public:
     void Cambiar(t ind, float w);
     t MirarMínimo();
     void EliminaMínimo();
-    ModeloCola* DevuelveActual() {return &corazon;}
+    ModeloCola<t>* DevuelveActual() {return &corazon;}
     string ToString();
 protected:
     void Alargar();
-    virtual int Flotar(int i);
-    virtual int Hundir(int i);
+    int Flotar(int i);
+    int Hundir(int i);
 };

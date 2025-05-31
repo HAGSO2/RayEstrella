@@ -75,7 +75,7 @@ void EsDecrementable::RessetText(){
 #pragma region Actor managment
 void EsDecrementable::ActualizaActores(){
     //Cuando quiera que se haga en diferentes pasos, hay que revisar esta línea
-    vector<ModeloCola*> vect = {cola.DevuelveActual()};
+    vector<ModeloCola<int>*> vect = {cola.DevuelveActual()};
     //->
     for(int i = 0; i < vect.size(); i++){
         FijaNumeroActores();
@@ -110,7 +110,7 @@ void EsDecrementable::FijaTextoActores(vector<string> nombr)
 
 #pragma region Scene managment
 
-EsDecrementable::EsDecrementable(): Scene(), active{0}, selected{false}, cola{ColaCasillas(CASILLAS)}
+EsDecrementable::EsDecrementable(): Scene(), active{0}, selected{false}, cola{ColaCasillas<int>(CASILLAS)}
 {
     canvas.AddTextBox(90,0,80,60,alltext[0]);
     canvas.AddTextBox(90,65,80,60,alltext[1]);

@@ -1,0 +1,1 @@
+La forma de ubicar x e y en un array es i es Y que va primero y después j con x, es decir [y,x] ==> [i,j]

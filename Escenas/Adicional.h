@@ -15,12 +15,19 @@ enum CellType{
 	EXIT = 6
 };
 
+struct Position2{
+    int i;
+    int j;
+    Position2(int,int);
+};
+
 struct Node{
     CellType type;
-    Vector2 position;
+    Position2 position;
     int index;
     float F;
     int G;
+    Node* father;
     public:
     Node();
 };

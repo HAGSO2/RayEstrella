@@ -11,7 +11,7 @@ class EsDecrementable : public Scene{
     const char minimoLetra = 'A';
     string fixedText[3] = {"Insertar elemento", "Cambiar elemento", "Eliminar elemento"};
     string alltext[5] = {"","","","",""};
-    ColaCasillas cola;
+    ColaCasillas<int> cola;
     TextShape* casillas[CASILLAS];
     int active;
     int velocidad = 1;
