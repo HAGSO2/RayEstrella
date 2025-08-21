@@ -14,6 +14,7 @@ class AStar{
     Node* currentPosition;
     vector<Node*> open;
     vector<Node*> closed;
+    Position2 target;
     ColaNodes cola;
     Node (&tabletop)[CELL_Y][CELL_X];
     public:
@@ -21,8 +22,8 @@ class AStar{
     vector<Node*> Pathfinding(Position2 s, Position2 t);
 
     private:
-    void Step(Position2 target);
-    float Heuristic(Position2 s, Position2 t);
+    void Step();
+    float Heuristic(Position2 s);
     //Añade a la lista opened los nodos colindantes
     void CalcNeightbours();
 };

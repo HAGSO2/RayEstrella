@@ -12,10 +12,11 @@ void Busqueda(void* ptr){
 
 Gameplay::Gameplay() : nodes{}, Scene(), estrella{nodes}
 {
-    for(int i = 0, z = 0; i < CELL_Y; i++){
+    for(int i = 0, z = 1; i < CELL_Y; i++){
         for(int j = 0; j < CELL_X; j++){
             nodes[i][j].position = Position2{i,j};
             nodes[i][j].index = z;
+            //TraceLog(LOG_DEBUG, "Index: %d",z);
             cells[i][j] = new Sprite(Vector2{WORLD_X_OFFSET+j*CELL_SIZE,WORLD_X_OFFSET+i*CELL_SIZE},Vector2{CELL_VISUAL,CELL_VISUAL}, BLUE);
             if(i == 0 || j == 0 || i == CELL_Y-1 || j == CELL_X-1){
                 nodes[i][j].type = HARDWALL;
