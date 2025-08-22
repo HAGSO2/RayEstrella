@@ -1,10 +1,11 @@
 #include "ColaCasillas.h"
 #include <raylib.h>
-using namespace std;
 
 #pragma region Modelo
 
-ModeloCola::ModeloCola(int max): monticulo{vector<pair<int,float>>(salto)}, posiciones{vector<int>(max+1,-1)}{};
+ModeloCola::ModeloCola(int max): 
+monticulo{vector<pair<int,float>>(salto)},
+posiciones{vector<int>(max+1,-1)}{};
 
 string ModeloCola::ToString(){
     string mensaje;
@@ -40,7 +41,7 @@ corazon{ModeloCola(max)}
 void ColaCasillas::Añadir(int elem, float w){
     if((int)corazon.monticulo.size() == ultimo+1)
         Alargar();
-    if(corazon.posiciones[elem] != -1){
+    if(corazon.posiciones[elem] == -1){
         corazon.monticulo[ultimo] = pair<int,float>(elem,w);
         corazon.posiciones[elem] = Flotar(ultimo);
     }

@@ -1,10 +1,11 @@
 #include "AStar.h"
+#include "iostream"
 
 
 
 AStar::AStar(Node (&tabl)[CELL_Y][CELL_X]): tabletop{tabl}, cola{ColaNodes(CELL_X*CELL_Y+1)}, 
 steps{0},currentPosition{nullptr},  open{vector<Node*>()}, closed{vector<Node*>()}, target{Position2(0,0)}
-{};
+{/*TraceLog(LOG_DEBUG,cola.ToString().c_str());*/};
 
 vector<Node*> AStar::Pathfinding(Position2 source, Position2 t){
     open = vector<Node*>();
@@ -13,10 +14,10 @@ vector<Node*> AStar::Pathfinding(Position2 source, Position2 t){
 
     currentPosition = tabletop[source.j,source.i];
     closed.push_back(currentPosition);
-
+    //TraceLog(LOG_DEBUG, cola.ToString().c_str());
     while (currentPosition->position.j != target.j || currentPosition->position.i != target.i)
     {
-        TraceLog(LOG_ALL,"Paso");
+        //TraceLog(LOG_ALL,"Paso");
         /* code */
         Step();
         steps++;
@@ -25,22 +26,32 @@ vector<Node*> AStar::Pathfinding(Position2 source, Position2 t){
 }
 
 void AStar::Step(){
-    TraceLog(LOG_DEBUG,"Desde: X:%d, Y:%d",currentPosition->position.j,currentPosition->position.i);
+    TraceLog(LOG_DEBUG,"Desde: Índice: %d X:%d, Y:%d",currentPosition->index
+        ,currentPosition->position.j,currentPosition->position.i);
+    TraceLog(LOG_DEBUG, "Target: X:%d Y:%d",target.j,target.i);
     CalcNeightbours();
     for(int i = 0; i < open.size(); i++){
-        //TraceLog(LOG_DEBUG, "Indice: %d Posicion: X: %d Y: %d",open[i]->index, open[i]->position.j,open[i]->position);
+        TraceLog(LOG_DEBUG, "Indice: %d Posicion: X: %d Y: %d",open[i]->index, open[i]->position.j,open[i]->position);
         open[i]->father = currentPosition;
-        cola.Añadir(open[i], Heuristic(open[i]->position));
+        float h = Heuristic(open[i]->position);
+        TraceLog(LOG_DEBUG,"Heuristic: %f",h);
+        cola.Añadir(open[i], h);
     };
+    //TraceLog(LOG_DEBUG, cola.ToString().c_str());
     Node* best = cola.MirarMínimo();
-    TraceLog(LOG_DEBUG,"Mira mínimo");
     TraceLog(LOG_DEBUG, "Mejor: %d", best->index);
+    std::cout << cola.ToString();
+    //TraceLog(LOG_DEBUG, cola.ToString().c_str());
     cola.EliminaMínimo();
-    TraceLog(LOG_DEBUG,"Minimo eliminado");
+    std::cout << cola.ToString();
+    //TraceLog(LOG_DEBUG, cola.ToString().c_str());
     closed.push_back(best);
     open = vector<Node*>();
     currentPosition = best;
-
+    for(int i = 0; i < closed.size(); i++){
+        TraceLog(LOG_DEBUG,"Nodo: %d <-",closed[i]->index);
+    }
+    WaitTime(0.1);
 };
 
 float AStar::Heuristic(Position2 s){
@@ -62,61 +73,61 @@ float AStar::Heuristic(Position2 s){
 
 void AStar::CalcNeightbours(){
     // if((currentPosition.x > 0 && currentPosition.y > 0 && currentPosition.x < CELL_X-1 && currentPosition.y < CELL_Y-1) &&
-    // tabletop[(int)currentPosition.x][(int)currentPosition.y].type != WALL ||
-    // tabletop[(int)currentPosition.x][(int)currentPosition.y].type != HARDWALL){
-    //     open.push_back(tabletop[(int)currentPosition.x][(int)currentPosition.y]);
+    // tabletop[(int)currentPosition.y][(int)currentPosition.x].type != WALL ||
+    // tabletop[(int)currentPosition.y][(int)currentPosition.x].type != HARDWALL){
+    //     open.push_back(tabletop[(int)currentPosition.y][(int)currentPosition.x]);
     // }
     //O
     //`C
     if((currentPosition->position.j > 0 && currentPosition->position.i > 0) &&
     (tabletop[currentPosition->position.i-1][currentPosition->position.j-1].type != WALL &&
      tabletop[currentPosition->position.i-1][currentPosition->position.j-1].type != HARDWALL)){
-        TraceLog(LOG_DEBUG,"AnteArriba");
+        //TraceLog(LOG_DEBUG,"AnteArriba");
         open.push_back(&tabletop[currentPosition->position.i-1][currentPosition->position.j-1]);
-        TraceLog(LOG_DEBUG, "Indice: %d Posicion: X: %d Y: %d",open.back()->index, open.back()->position.j,open.back()->position.i);
+        //TraceLog(LOG_DEBUG, "Indice: %d Posicion: X: %d Y: %d",open.back()->index, open.back()->position.j,open.back()->position.i);
     }
     //O
     //ĉ
     if((currentPosition->position.i > 0 ) &&
     (tabletop[currentPosition->position.i-1][currentPosition->position.j].type != WALL &&
      tabletop[currentPosition->position.i-1][currentPosition->position.j].type != HARDWALL)){
-        TraceLog(LOG_DEBUG,"Arriba");
+        //TraceLog(LOG_DEBUG,"Arriba");
         open.push_back(&tabletop[currentPosition->position.i-1][currentPosition->position.j]);
-        TraceLog(LOG_DEBUG, "Indice: %d Posicion: X: %d Y: %d",open.back()->index, open.back()->position.j,open.back()->position.i);
+        //TraceLog(LOG_DEBUG, "Indice: %d Posicion: X: %d Y: %d",open.back()->index, open.back()->position.j,open.back()->position.i);
     }
     // O
     //Ć
     if((currentPosition->position.i > 0 && currentPosition->position.j < CELL_X-1) &&
     (tabletop[currentPosition->position.i-1][currentPosition->position.j+1].type != WALL &&
      tabletop[currentPosition->position.i-1][currentPosition->position.j+1].type != HARDWALL)){
-        TraceLog(LOG_DEBUG,"PostArriba");
+        //TraceLog(LOG_DEBUG,"PostArriba");
         open.push_back(&tabletop[currentPosition->position.i-1][currentPosition->position.j+1]);
-        TraceLog(LOG_DEBUG, "Indice: %d Posicion: X: %d Y: %d",open.back()->index, open.back()->position.j,open.back()->position.i);
+        //TraceLog(LOG_DEBUG, "Indice: %d Posicion: X: %d Y: %d",open.back()->index, open.back()->position.j,open.back()->position.i);
     }
     //O < C
     if((currentPosition->position.j > 0) &&
     (tabletop[currentPosition->position.i][currentPosition->position.j-1].type != WALL &&
      tabletop[currentPosition->position.i][currentPosition->position.j-1].type != HARDWALL)){
-        TraceLog(LOG_DEBUG,"Anterior");
+        //TraceLog(LOG_DEBUG,"Anterior");
         open.push_back(&tabletop[currentPosition->position.i][currentPosition->position.j-1]);
-        TraceLog(LOG_DEBUG, "Indice: %d Posicion: X: %d Y: %d",open.back()->index, open.back()->position.j,open.back()->position.i);
+        //TraceLog(LOG_DEBUG, "Indice: %d Posicion: X: %d Y: %d",open.back()->index, open.back()->position.j,open.back()->position.i);
     }
     //C > O
     if((currentPosition->position.j < CELL_X-1) &&
     (tabletop[currentPosition->position.i][currentPosition->position.j+1].type != WALL &&
      tabletop[currentPosition->position.i][currentPosition->position.j+1].type != HARDWALL)){
-        TraceLog(LOG_DEBUG,"Posterior");
+        //TraceLog(LOG_DEBUG,"Posterior");
         open.push_back(&tabletop[currentPosition->position.i][currentPosition->position.j+1]);
-        TraceLog(LOG_DEBUG, "Indice: %d Posicion: X: %d Y: %d",open.back()->index, open.back()->position.j,open.back()->position.i);
+        //TraceLog(LOG_DEBUG, "Indice: %d Posicion: X: %d Y: %d",open.back()->index, open.back()->position.j,open.back()->position.i);
     }
     // C
     //Ó
     if((currentPosition->position.j > 0 && currentPosition->position.i < CELL_Y-1) &&
     (tabletop[currentPosition->position.i+1][currentPosition->position.j-1].type != WALL &&
      tabletop[currentPosition->position.i+1][currentPosition->position.j-1].type != HARDWALL)){
-        TraceLog(LOG_DEBUG,"AnteDebajo");
+        //TraceLog(LOG_DEBUG,"AnteDebajo");
         open.push_back(&tabletop[currentPosition->position.i+1][currentPosition->position.j-1]);
-        TraceLog(LOG_DEBUG, "Indice: %d Posicion: X: %d Y: %d",open.back()->index, open.back()->position.j,open.back()->position.i);
+        //TraceLog(LOG_DEBUG, "Indice: %d Posicion: X: %d Y: %d",open.back()->index, open.back()->position.j,open.back()->position.i);
     }
     //C
     //V
@@ -124,17 +135,17 @@ void AStar::CalcNeightbours(){
     if((currentPosition->position.i < CELL_Y-1) &&
     (tabletop[currentPosition->position.i+1][currentPosition->position.j].type != WALL &&
      tabletop[currentPosition->position.i+1][currentPosition->position.j].type != HARDWALL)){
-        TraceLog(LOG_DEBUG,"Debajo");
+        //TraceLog(LOG_DEBUG,"Debajo");
         open.push_back(&tabletop[currentPosition->position.i+1][currentPosition->position.j]);
-        TraceLog(LOG_DEBUG, "Indice: %d Posicion: X: %d Y: %d",open.back()->index, open.back()->position.j,open.back()->position.i);
+        //TraceLog(LOG_DEBUG, "Indice: %d Posicion: X: %d Y: %d",open.back()->index, open.back()->position.j,open.back()->position.i);
     }
     //C
     // Ò
     if((currentPosition->position.j < CELL_X-1 && currentPosition->position.i < CELL_Y-1) &&
     (tabletop[currentPosition->position.i+1][currentPosition->position.j+1].type != WALL &&
      tabletop[currentPosition->position.i+1][currentPosition->position.j+1].type != HARDWALL)){
-        TraceLog(LOG_DEBUG,"PostDebajo");
+        //TraceLog(LOG_DEBUG,"PostDebajo");
         open.push_back(&tabletop[currentPosition->position.i+1][currentPosition->position.j+1]);
-        TraceLog(LOG_DEBUG, "Indice: %d Posicion: X: %d Y: %d",open.back()->index, open.back()->position.j,open.back()->position.i);
+        //TraceLog(LOG_DEBUG, "Indice: %d Posicion: X: %d Y: %d",open.back()->index, open.back()->position.j,open.back()->position.i);
     }
 }

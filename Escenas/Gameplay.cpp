@@ -66,22 +66,29 @@ void Gameplay::UpdateScreen(){
 }
 
 void Gameplay::OnMouseDown(){
-    int i = (mousePosition.y-WORLD_Y_OFFSET) / CELL_SIZE;
-    int j = (mousePosition.x-WORLD_X_OFFSET) / CELL_SIZE;
-    //TraceLog(LOG_DEBUG,"X:%d Y:%d",j,i);
+    int i = (mousePosition.y-WORLD_Y_OFFSET);
+    int j = (mousePosition.x-WORLD_X_OFFSET);
+    if(i > 0 && j > 0){
+        i = i / CELL_SIZE;
+        j = j / CELL_SIZE;
+        TraceLog(LOG_DEBUG,"X:%d Y:%d",j,i);
+        if(i >= 0 && i < CELL_Y && j >= 0 && j < CELL_X)
+        TraceLog(LOG_DEBUG, "Dentro");
 
-    if(i >= 0 && i < CELL_Y && j >= 0 && j < CELL_X){
-        TraceLog(LOG_DEBUG,"DENTRO");
-        if(nodes[i][j].type == DEFAULT){
-            nodes[i][j].type = WALL;
-            cells[i][j]->ChangeColor(RED);
+        if(i >= 0 && i < CELL_Y && j >= 0 && j < CELL_X){
+            TraceLog(LOG_DEBUG,"DENTRO");
+            if(nodes[i][j].type == DEFAULT){
+                nodes[i][j].type = WALL;
+                cells[i][j]->ChangeColor(RED);
+            }
+            else if(nodes[i][j].type == WALL){
+                nodes[i][j].type = DEFAULT;
+                cells[i][j]->ChangeColor(BLUE);
+            }
+            WaitTime(0.1f);
         }
-        else if(nodes[i][j].type == WALL){
-            nodes[i][j].type = DEFAULT;
-            cells[i][j]->ChangeColor(BLUE);
-        }
-        WaitTime(0.1f);
     }
+    
     canvas.UpdateScreen(mousePosition);
 }
 
@@ -92,6 +99,9 @@ void Gameplay::DrawScreen()
     for(int i = 0; i < CELL_Y; i++){
         for(int j = 0; j < CELL_X; j++){
             cells[i][j]->DrawObject();
+            DrawText(to_string(nodes[i][j].index).c_str(),
+            j*CELL_SIZE+WORLD_X_OFFSET,i*CELL_SIZE+WORLD_X_OFFSET,
+            12,BLACK);
         }
     }
 };

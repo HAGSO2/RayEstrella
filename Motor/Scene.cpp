@@ -4,9 +4,10 @@ Scene::Scene() :finishScreen{ UNKNOWN }, canvas{UI()} {};
 
 void Scene::ManageInterruptions(){
     if(IsMouseButtonDown(0)){
+        mousePosition = GetMousePosition();
         OnMouseDown();
     }
-    mousePosition = GetMousePosition();
+
     OnKeyPressed((KeyboardKey)GetKeyPressed());
 };
 

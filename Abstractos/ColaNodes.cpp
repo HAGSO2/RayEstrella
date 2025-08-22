@@ -1,22 +1,26 @@
 #include "ColaNodes.h"
 #include <raylib.h>
-using namespace std;
+#include "iostream"
 
 #pragma region Cola Casillas
-ColaNodes::ColaNodes(int max):ultimo{1}, monticulo{vector<pair<Node*,float>>(salto)}, posiciones{vector<int>(max+1,-1)}
+ColaNodes::ColaNodes(int max):ultimo{1}, 
+monticulo{vector<pair<Node*,float>>(salto)}, 
+posiciones{vector<int>(max,-1)}
 {};
 
 void ColaNodes::Añadir(Node* elem, float w){
+    //TraceLog(LOG_DEBUG,"Añadiendo...");
     if((int)monticulo.size() == ultimo+1)
         Alargar();
-    if(posiciones[elem->index] != -1){
+    if(posiciones[elem->index] == -1){
         monticulo[ultimo] = pair<Node*,float>(elem,w);
         posiciones[elem->index] = Flotar(ultimo);
     }
     else if(monticulo[posiciones[elem->index]].second > w){
         Cambiar(elem, w);
     };
-    
+    TraceLog(LOG_DEBUG,"Añadido en: %d",posiciones[elem->index]);
+    //std::cout << ToString();
     ultimo++;
 };
 
@@ -52,6 +56,27 @@ void ColaNodes::Cambiar(Node* elem, float w){
 };
 Node* ColaNodes::MirarMínimo(){return monticulo[1].first;};
 void ColaNodes::EliminaMínimo(){Eliminar(monticulo[1].first);};
+
+string ColaNodes::ToString(){
+    string queue = "\nMontículo: \n";
+    for(int i = 1; i < monticulo.size() ;i++){
+        if(monticulo[i].first != nullptr)
+            queue.append( "["+to_string(monticulo[i].first->index) + "|" + to_string(monticulo[i].second) + "]\n");
+        else
+            queue.append("[|]\n");
+    }
+    queue.append("Posiciones: \n");
+    for(int i = 1,j = 0; i < posiciones.size(); i++){
+        queue.append( to_string(i) + "|" + to_string(posiciones[i]) + "\t");
+        j++;
+        if(j == 10){
+            queue.append("\n");
+            j = 0;
+        }
+    }
+    queue.append("\n");
+    return queue;
+}
 
 #pragma region Cola interno
 int ColaNodes::Hundir(int i){
