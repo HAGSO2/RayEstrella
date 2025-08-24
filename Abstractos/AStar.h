@@ -20,7 +20,6 @@ class AStar{
     public:
     AStar(Node (&tabletop)[CELL_Y][CELL_X]);
     vector<Node*> Pathfinding(Position2 s, Position2 t);
-
     private:
     void Step();
     float Heuristic(Position2 s);

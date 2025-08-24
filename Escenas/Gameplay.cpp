@@ -54,7 +54,7 @@ void Gameplay::TodoACero(){
     cells[ENTRANCE_Y][ENTRANCE_X]->ChangeColor(ENTRANCE_COLOR);
 
     nodes[END_Y][END_X].type = EXIT;
-    cells[END_Y][END_X]->ChangeColor(END_COLOR);  
+    cells[END_Y][END_X]->ChangeColor(END_COLOR);
 }
 
 void Gameplay::EmpiezaBusqueda(){

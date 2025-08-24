@@ -5,26 +5,27 @@
 
 AStar::AStar(Node (&tabl)[CELL_Y][CELL_X]): tabletop{tabl}, cola{ColaNodes(CELL_X*CELL_Y+1)}, 
 steps{0},currentPosition{nullptr},  open{vector<Node*>()}, closed{vector<Node*>()}, target{Position2(0,0)}
-{/*TraceLog(LOG_DEBUG,cola.ToString().c_str());*/};
+{/*TraceLog(LOG_DEBUG,cola.ToString().c_str());*/}
 
 vector<Node*> AStar::Pathfinding(Position2 source, Position2 t){
     open = vector<Node*>();
     closed = vector<Node*>();
+    currentPosition = nullptr;
+    steps = 0;
     target = t;
 
     currentPosition = tabletop[source.j,source.i];
+    int aux = 0;
+    cola.Añadir(currentPosition,0,aux);
     closed.push_back(currentPosition);
-    //TraceLog(LOG_DEBUG, cola.ToString().c_str());
+    std::cout << cola.ToString();
+    cola.EliminaMínimo();
     while (currentPosition->position.j != target.j || currentPosition->position.i != target.i)
     {
-        //TraceLog(LOG_ALL,"Paso");
         /* code */
         Step();
         steps++;
     }
-    // for(int i = 0; i < closed.size(); i++){
-    //     TraceLog(LOG_DEBUG,"Nodo: %d <-",closed[i]->index);
-    // }
     return closed;
 }
 
@@ -36,31 +37,25 @@ void AStar::Step(){
     for(int i = 0; i < open.size(); i++){
         //TraceLog(LOG_DEBUG, "Indice: %d Posicion: X: %d Y: %d",open[i]->index, open[i]->position.j,open[i]->position);
         float h = Heuristic(open[i]->position);
-        //TraceLog(LOG_DEBUG,"Heuristic: %f",h);
         int cambio = 0;
         cola.Añadir(open[i], h, cambio);
         if(cambio == 1)
             open[i]->father = currentPosition;
     };
-    //TraceLog(LOG_DEBUG, cola.ToString().c_str());
     Node* best = cola.MirarMínimo();
     //TraceLog(LOG_DEBUG, "Mejor: %d", best->index);
     //std::cout << cola.ToString();
-    //TraceLog(LOG_DEBUG, cola.ToString().c_str());
     cola.EliminaMínimo();
-    //std::cout << cola.ToString();
-    //TraceLog(LOG_DEBUG, cola.ToString().c_str());
-    //TraceLog(LOG_DEBUG, "Último: %d", cola.ultimo);
     closed.push_back(best);
     open = vector<Node*>();
     currentPosition = best;
     WaitTime(0.1);
-};
+}
 
 float AStar::Heuristic(Position2 s){
-    float result = sqrtf((s.j - target.j)*(s.j - target.j) + (s.i - target.i)*(s.i - target.i));
+    float result = sqrtf((s.j - target.j)*(s.j - target.j) + (s.i - target.i)*(s.i - target.i))*10;
     return result + steps;
-};
+}
 
 /*  
     *******
@@ -87,7 +82,6 @@ void AStar::CalcNeightbours(){
      tabletop[currentPosition->position.i-1][currentPosition->position.j-1].type != HARDWALL)){
         //TraceLog(LOG_DEBUG,"AnteArriba");
         open.push_back(&tabletop[currentPosition->position.i-1][currentPosition->position.j-1]);
-        //TraceLog(LOG_DEBUG, "Indice: %d Posicion: X: %d Y: %d",open.back()->index, open.back()->position.j,open.back()->position.i);
     }
     //O
     //ĉ
@@ -96,7 +90,6 @@ void AStar::CalcNeightbours(){
      tabletop[currentPosition->position.i-1][currentPosition->position.j].type != HARDWALL)){
         //TraceLog(LOG_DEBUG,"Arriba");
         open.push_back(&tabletop[currentPosition->position.i-1][currentPosition->position.j]);
-        //TraceLog(LOG_DEBUG, "Indice: %d Posicion: X: %d Y: %d",open.back()->index, open.back()->position.j,open.back()->position.i);
     }
     // O
     //Ć
@@ -105,7 +98,6 @@ void AStar::CalcNeightbours(){
      tabletop[currentPosition->position.i-1][currentPosition->position.j+1].type != HARDWALL)){
         //TraceLog(LOG_DEBUG,"PostArriba");
         open.push_back(&tabletop[currentPosition->position.i-1][currentPosition->position.j+1]);
-        //TraceLog(LOG_DEBUG, "Indice: %d Posicion: X: %d Y: %d",open.back()->index, open.back()->position.j,open.back()->position.i);
     }
     //O < C
     if((currentPosition->position.j > 0) &&
@@ -113,7 +105,6 @@ void AStar::CalcNeightbours(){
      tabletop[currentPosition->position.i][currentPosition->position.j-1].type != HARDWALL)){
         //TraceLog(LOG_DEBUG,"Anterior");
         open.push_back(&tabletop[currentPosition->position.i][currentPosition->position.j-1]);
-        //TraceLog(LOG_DEBUG, "Indice: %d Posicion: X: %d Y: %d",open.back()->index, open.back()->position.j,open.back()->position.i);
     }
     //C > O
     if((currentPosition->position.j < CELL_X-1) &&
@@ -121,7 +112,6 @@ void AStar::CalcNeightbours(){
      tabletop[currentPosition->position.i][currentPosition->position.j+1].type != HARDWALL)){
         //TraceLog(LOG_DEBUG,"Posterior");
         open.push_back(&tabletop[currentPosition->position.i][currentPosition->position.j+1]);
-        //TraceLog(LOG_DEBUG, "Indice: %d Posicion: X: %d Y: %d",open.back()->index, open.back()->position.j,open.back()->position.i);
     }
     // C
     //Ó
@@ -130,7 +120,6 @@ void AStar::CalcNeightbours(){
      tabletop[currentPosition->position.i+1][currentPosition->position.j-1].type != HARDWALL)){
         //TraceLog(LOG_DEBUG,"AnteDebajo");
         open.push_back(&tabletop[currentPosition->position.i+1][currentPosition->position.j-1]);
-        //TraceLog(LOG_DEBUG, "Indice: %d Posicion: X: %d Y: %d",open.back()->index, open.back()->position.j,open.back()->position.i);
     }
     //C
     //V
@@ -140,7 +129,6 @@ void AStar::CalcNeightbours(){
      tabletop[currentPosition->position.i+1][currentPosition->position.j].type != HARDWALL)){
         //TraceLog(LOG_DEBUG,"Debajo");
         open.push_back(&tabletop[currentPosition->position.i+1][currentPosition->position.j]);
-        //TraceLog(LOG_DEBUG, "Indice: %d Posicion: X: %d Y: %d",open.back()->index, open.back()->position.j,open.back()->position.i);
     }
     //C
     // Ò
@@ -149,6 +137,5 @@ void AStar::CalcNeightbours(){
      tabletop[currentPosition->position.i+1][currentPosition->position.j+1].type != HARDWALL)){
         //TraceLog(LOG_DEBUG,"PostDebajo");
         open.push_back(&tabletop[currentPosition->position.i+1][currentPosition->position.j+1]);
-        //TraceLog(LOG_DEBUG, "Indice: %d Posicion: X: %d Y: %d",open.back()->index, open.back()->position.j,open.back()->position.i);
     }
 }

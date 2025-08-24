@@ -3,10 +3,18 @@
 #include "iostream"
 
 #pragma region Cola Casillas
-ColaNodes::ColaNodes(int max):ultimo{1}, 
+ColaNodes::ColaNodes(int m):ultimo{1}, 
 monticulo{vector<pair<Node*,float>>(salto)}, 
-posiciones{vector<int>(max,-1)}
+posiciones{vector<int>(m,-1)}, max{m}
 {};
+
+void ColaNodes::Resset(){
+    ultimo = 1;
+    monticulo.clear();
+    posiciones.clear();
+    monticulo = vector<pair<Node*,float>>(salto);
+    posiciones = vector<int>(max,-1);
+};
 
 void ColaNodes::Añadir(Node* elem, float w, int & cambio){
     //TraceLog(LOG_DEBUG,"Añadiendo...");
