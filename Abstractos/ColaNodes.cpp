@@ -8,20 +8,23 @@ monticulo{vector<pair<Node*,float>>(salto)},
 posiciones{vector<int>(max,-1)}
 {};
 
-void ColaNodes::Añadir(Node* elem, float w){
+void ColaNodes::Añadir(Node* elem, float w, int & cambio){
     //TraceLog(LOG_DEBUG,"Añadiendo...");
     if((int)monticulo.size() == ultimo+1)
         Alargar();
-    if(posiciones[elem->index] == -1){
-        monticulo[ultimo] = pair<Node*,float>(elem,w);
-        posiciones[elem->index] = Flotar(ultimo);
+    if(posiciones[elem->index] == -1){// Si no se encuentra en las posicioines:
+        monticulo[ultimo] = pair<Node*,float>(elem,w); //Se añade el último y
+        posiciones[elem->index] = Flotar(ultimo); //Flota desde allí y guarda posicións
+        cambio = 1;
+        ultimo++;
     }
-    else if(monticulo[posiciones[elem->index]].second > w){
+    else if(monticulo[posiciones[elem->index]].second > w){//Si está actualmente dentro de la cola:
         Cambiar(elem, w);
+        cambio = 1;
     };
-    TraceLog(LOG_DEBUG,"Añadido en: %d",posiciones[elem->index]);
+    //TraceLog(LOG_DEBUG,"Añadido en: %d",posiciones[elem->index]);
+    //TraceLog(LOG_DEBUG, "Último: %d",ultimo);
     //std::cout << ToString();
-    ultimo++;
 };
 
 void ColaNodes::Alargar(){
@@ -34,11 +37,11 @@ void ColaNodes::Alargar(){
 
 void ColaNodes::Eliminar(Node* elem){
     int ind = posiciones[elem->index];
-    posiciones[elem->index] = -1;
+    posiciones[elem->index] = -2;
     ultimo--;
     monticulo[ind] = monticulo[ultimo];
     int otrapos = monticulo[ind].first->index;
-    monticulo[ultimo] = pair<Node*,float>(nullptr,0);
+    //monticulo[ultimo] = pair<Node*,float>(nullptr,0);
     int pos = Hundir(ind);
     posiciones[otrapos] = pos;
 };

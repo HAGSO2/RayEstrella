@@ -22,35 +22,38 @@ vector<Node*> AStar::Pathfinding(Position2 source, Position2 t){
         Step();
         steps++;
     }
+    // for(int i = 0; i < closed.size(); i++){
+    //     TraceLog(LOG_DEBUG,"Nodo: %d <-",closed[i]->index);
+    // }
     return closed;
 }
 
 void AStar::Step(){
-    TraceLog(LOG_DEBUG,"Desde: Índice: %d X:%d, Y:%d",currentPosition->index
-        ,currentPosition->position.j,currentPosition->position.i);
-    TraceLog(LOG_DEBUG, "Target: X:%d Y:%d",target.j,target.i);
+    //TraceLog(LOG_DEBUG,"Desde: Índice: %d X:%d, Y:%d",currentPosition->index
+    //    ,currentPosition->position.j,currentPosition->position.i);
+    //TraceLog(LOG_DEBUG, "Target: X:%d Y:%d",target.j,target.i);
     CalcNeightbours();
     for(int i = 0; i < open.size(); i++){
-        TraceLog(LOG_DEBUG, "Indice: %d Posicion: X: %d Y: %d",open[i]->index, open[i]->position.j,open[i]->position);
-        open[i]->father = currentPosition;
+        //TraceLog(LOG_DEBUG, "Indice: %d Posicion: X: %d Y: %d",open[i]->index, open[i]->position.j,open[i]->position);
         float h = Heuristic(open[i]->position);
-        TraceLog(LOG_DEBUG,"Heuristic: %f",h);
-        cola.Añadir(open[i], h);
+        //TraceLog(LOG_DEBUG,"Heuristic: %f",h);
+        int cambio = 0;
+        cola.Añadir(open[i], h, cambio);
+        if(cambio == 1)
+            open[i]->father = currentPosition;
     };
     //TraceLog(LOG_DEBUG, cola.ToString().c_str());
     Node* best = cola.MirarMínimo();
-    TraceLog(LOG_DEBUG, "Mejor: %d", best->index);
-    std::cout << cola.ToString();
+    //TraceLog(LOG_DEBUG, "Mejor: %d", best->index);
+    //std::cout << cola.ToString();
     //TraceLog(LOG_DEBUG, cola.ToString().c_str());
     cola.EliminaMínimo();
-    std::cout << cola.ToString();
+    //std::cout << cola.ToString();
     //TraceLog(LOG_DEBUG, cola.ToString().c_str());
+    //TraceLog(LOG_DEBUG, "Último: %d", cola.ultimo);
     closed.push_back(best);
     open = vector<Node*>();
     currentPosition = best;
-    for(int i = 0; i < closed.size(); i++){
-        TraceLog(LOG_DEBUG,"Nodo: %d <-",closed[i]->index);
-    }
     WaitTime(0.1);
 };
 
