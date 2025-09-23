@@ -62,15 +62,17 @@ void Gameplay::EmpiezaBusqueda(){
     vector<Node *> path = estrella.Pathfinding(Position2{ENTRANCE_Y,ENTRANCE_X},Position2{END_Y,END_X});
     // TraceLog(LOG_DEBUG,"Elementos:%d",path.size());
     for(int i = 0; i < path.size(); i++){
-        // TraceLog(LOG_ALL,"X: %d, Y: %d Father: X:%d, Y:%d",path[i]->position.j,path[i]->position.i,
-        // path[i]->father->position.j,path[i]->father->position.i);
+        if(path[i]->father != nullptr)
+            TraceLog(LOG_ALL,"X: %d, Y: %d Father: X:%d, Y:%d",path[i]->position.j,path[i]->position.i,
+            path[i]->father->position.j,path[i]->father->position.i);
         cells[path[i]->position.i][path[i]->position.j]->ChangeColor(BROWN);
     }
-    // for(Node* actual = path.back(); actual != nullptr && actual != &nodes[ENTRANCE_Y][ENTRANCE_X]; actual = actual->father ){
-    //     TraceLog(LOG_ALL,"X: %d, Y: %d",actual->position.j,actual->position.i);
-    //     cells[actual->position.i][actual->position.j]->ChangeColor(BROWN);
-    // }
-    // TraceLog(LOG_DEBUG,"Finiquitado!");
+    TraceLog(LOG_DEBUG,"Camino simple");
+    for(Node* actual = path.back(); actual != nullptr && actual != &nodes[ENTRANCE_Y][ENTRANCE_X]; actual = actual->father ){
+        TraceLog(LOG_ALL,"X: %d, Y: %d",actual->position.j,actual->position.i);
+        cells[actual->position.i][actual->position.j]->ChangeColor(BROWN);
+    }
+    TraceLog(LOG_DEBUG,"Finiquitado!");
 }
 
 void Gameplay::UpdateScreen(){

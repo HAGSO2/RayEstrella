@@ -18,6 +18,7 @@ void ColaNodes::Resset(){
 
 void ColaNodes::Añadir(Node* elem, float w, int & cambio){
     //TraceLog(LOG_DEBUG,"Añadiendo...");
+    //TraceLog(LOG_DEBUG,"Nodo: X:%d Y:%d",elem->position.j,elem->position.i);
     if((int)monticulo.size() == ultimo+1)
         Alargar();
     if(posiciones[elem->index] == -1){// Si no se encuentra en las posicioines:
@@ -25,12 +26,16 @@ void ColaNodes::Añadir(Node* elem, float w, int & cambio){
         posiciones[elem->index] = Flotar(ultimo); //Flota desde allí y guarda posicións
         cambio = 1;
         ultimo++;
+        TraceLog(LOG_DEBUG,"Añadido en: %d",posiciones[elem->index]);
+        return;
     }
-    else if(monticulo[posiciones[elem->index]].second > w){//Si está actualmente dentro de la cola:
+    else if(posiciones[elem->index] != -2 && monticulo[posiciones[elem->index]].second > w){//Si está actualmente dentro de la cola:
         Cambiar(elem, w);
         cambio = 1;
+        TraceLog(LOG_DEBUG,"Añadido en: %d",posiciones[elem->index]);
+        return;
     };
-    //TraceLog(LOG_DEBUG,"Añadido en: %d",posiciones[elem->index]);
+    TraceLog(LOG_DEBUG,"Ya se eliminó");
     //TraceLog(LOG_DEBUG, "Último: %d",ultimo);
     //std::cout << ToString();
 };

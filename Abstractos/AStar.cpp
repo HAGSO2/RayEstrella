@@ -16,10 +16,10 @@ vector<Node*> AStar::Pathfinding(Position2 source, Position2 t){
 
     currentPosition = tabletop[source.j,source.i];
     int aux = 0;
-    //cola.Añadir(currentPosition,0,aux);
-    //closed.push_back(currentPosition);
+    cola.Añadir(currentPosition,0,aux);
+    closed.push_back(currentPosition);
     //std::cout << cola.ToString();
-    //cola.EliminaMínimo();
+    cola.EliminaMínimo();
     //std::cout << cola.ToString();
     while (currentPosition->position.j != target.j || currentPosition->position.i != target.i)
     {
