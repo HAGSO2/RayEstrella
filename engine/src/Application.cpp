@@ -4,9 +4,6 @@
 void Application::run()
 {
     // Main application loop code here
-    InitWindow(screenWidth, screenHeight, ApplicationName.c_str());
-    SetTargetFPS(FPs);
-
     Init();
 
     while (!WindowShouldClose())
@@ -15,6 +12,8 @@ void Application::run()
 
         Draw();
     }
+
+    Unload();
 
     CloseWindow();
 }

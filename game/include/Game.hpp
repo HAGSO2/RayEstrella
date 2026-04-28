@@ -22,7 +22,7 @@ public:
      * GLOBAL VARIABLES *
      ********************/
     Font font = {0};
-    Music music = {0};
+    Music music = {};
 
     // TODO: Take this to the Application class, maybe with some methods to manage it?
     GameScreen currentScreen;
@@ -45,4 +45,5 @@ public:
     void Init() override;
     void Update() override;
     void Draw() override;
+    void Unload() override;
 };

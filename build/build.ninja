@@ -194,6 +194,16 @@ build game/CMakeFiles/game.dir/src/Game.cpp.o: CXX_COMPILER__game_unscanned_Debu
   OBJECT_FILE_DIR = game/CMakeFiles/game.dir/src
   TARGET_SUPPORT_DIR = game/CMakeFiles/game.dir
 
+build game/CMakeFiles/game.dir/src/CommonInfo.cpp.o: CXX_COMPILER__game_unscanned_Debug /home/angel/Documentos/GitHub/RayEstrella/game/src/CommonInfo.cpp || cmake_object_order_depends_target_game
+  CONFIG = Debug
+  DEFINES = -DGRAPHICS_API_OPENGL_33 -DPLATFORM_DESKTOP -DUSE_LIBTYPE_SHARED
+  DEP_FILE = game/CMakeFiles/game.dir/src/CommonInfo.cpp.o.d
+  FLAGS = -g -std=gnu++17
+  INCLUDES = -I/home/angel/Documentos/GitHub/RayEstrella/game/include -I/home/angel/Documentos/GitHub/RayEstrella/engine/include
+  OBJECT_DIR = game/CMakeFiles/game.dir
+  OBJECT_FILE_DIR = game/CMakeFiles/game.dir/src
+  TARGET_SUPPORT_DIR = game/CMakeFiles/game.dir
+
 build game/CMakeFiles/game.dir/src/Scenes/Logo.cpp.o: CXX_COMPILER__game_unscanned_Debug /home/angel/Documentos/GitHub/RayEstrella/game/src/Scenes/Logo.cpp || cmake_object_order_depends_target_game
   CONFIG = Debug
   DEFINES = -DGRAPHICS_API_OPENGL_33 -DPLATFORM_DESKTOP -DUSE_LIBTYPE_SHARED
@@ -282,7 +292,7 @@ build game/CMakeFiles/game.dir/src/Containers/AStar.cpp.o: CXX_COMPILER__game_un
 #############################################
 # Link the executable bin/game
 
-build bin/game: CXX_EXECUTABLE_LINKER__game_Debug game/CMakeFiles/game.dir/src/main.cpp.o game/CMakeFiles/game.dir/src/Game.cpp.o game/CMakeFiles/game.dir/src/Scenes/Logo.cpp.o game/CMakeFiles/game.dir/src/Scenes/Tittle.cpp.o game/CMakeFiles/game.dir/src/Scenes/Gameplay.cpp.o game/CMakeFiles/game.dir/src/Scenes/EsDecrementable.cpp.o game/CMakeFiles/game.dir/src/Containers/ColaCasillas.cpp.o game/CMakeFiles/game.dir/src/Containers/ColaNodes.cpp.o game/CMakeFiles/game.dir/src/Containers/DebugColaCasillas.cpp.o game/CMakeFiles/game.dir/src/Containers/AStar.cpp.o | engine/libengine.a /usr/lib/libraylib.so.6.0.0 || engine/libengine.a
+build bin/game: CXX_EXECUTABLE_LINKER__game_Debug game/CMakeFiles/game.dir/src/main.cpp.o game/CMakeFiles/game.dir/src/Game.cpp.o game/CMakeFiles/game.dir/src/CommonInfo.cpp.o game/CMakeFiles/game.dir/src/Scenes/Logo.cpp.o game/CMakeFiles/game.dir/src/Scenes/Tittle.cpp.o game/CMakeFiles/game.dir/src/Scenes/Gameplay.cpp.o game/CMakeFiles/game.dir/src/Scenes/EsDecrementable.cpp.o game/CMakeFiles/game.dir/src/Containers/ColaCasillas.cpp.o game/CMakeFiles/game.dir/src/Containers/ColaNodes.cpp.o game/CMakeFiles/game.dir/src/Containers/DebugColaCasillas.cpp.o game/CMakeFiles/game.dir/src/Containers/AStar.cpp.o | engine/libengine.a /usr/lib/libraylib.so.6.0.0 || engine/libengine.a
   CONFIG = Debug
   DEP_FILE = game/CMakeFiles/game.dir/link.d
   FLAGS = -g

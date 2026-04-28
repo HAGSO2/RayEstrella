@@ -5,7 +5,7 @@ void Game::LoadResources()
 {
     // Load game resources here (e.g., textures, sounds, etc.)
     // TODO: Make this more generic, maybe with a ResourceManager class?
-    //font = LoadFont("assets/fonts/mecha.png");
+    font = LoadFont("assets/fonts/mecha.png");
     music = LoadMusicStream("assets/sounds/ambient.ogg");
 }
 
@@ -13,13 +13,13 @@ void Game::InitStarters()
 {
     SetTargetFPS(60);
     InitAudioDevice();
-    // Initialize game scenes and other necessary components here
+    //  Initialize game scenes and other necessary components here
     gameScenes[LOGO] = new Logo();
     gameScenes[TITTLE] = new Tittle(font, screenWidth, screenHeight);
-    // gameScenes[GAMEPLAY] = new Gameplay();
-    // gameScenes[DECREMENTABLE] = new EsDecrementable();
+    gameScenes[GAMEPLAY] = new Gameplay();
+    gameScenes[DECREMENTABLE] = new EsDecrementable();
 
-    currentScreen = GameScreen(LOGO);
+    currentScreen = LOGO;
 }
 
 void Game::Init()
@@ -27,8 +27,9 @@ void Game::Init()
     InitWindow(screenWidth, screenHeight, ApplicationName.c_str());
     SetTraceLogLevel(LOG_ALL);
     // Initialize game resources here
-    LoadResources();
     InitStarters();
+    LoadResources();
+    
 
     SetMusicVolume(music, 1.0f);
     PlayMusicStream(music);
@@ -70,6 +71,13 @@ void Game::Draw()
     // DrawFPS(10, 10);
 
     EndDrawing();
+}
+
+void Game::Unload()
+{
+    gameScenes[currentScreen]->UnloadScreen();
+
+    CloseAudioDevice(); // Close audio context
 }
 
 #pragma region Transition Methods

@@ -5,7 +5,7 @@ UI::UI(){};
 
 UIElement::UIElement(float x, float y, float width, float height) : area(Rectangle{x,y,width,height}){};
 
-void UI::AddButton(float x, float y, float width, float height, char* s, Color c, void (*Func)(void*), void* ptr){
+void UI::AddButton(float x, float y, float width, float height,const char* s, Color c, void (*Func)(void*), void* ptr){
     elements.push_back(new Button(x,y,width,height,s,c,Func,ptr));
 }
 
@@ -54,7 +54,7 @@ CallBack::CallBack(void (*Func)(void*), void* miptrs): ClickFunk{Func}, ptr{mipt
 
 #pragma region Botón
 
-Button::Button(float x, float y, float width, float height, char* s, Color c, void (*Func)(void*), void* miptr):
+Button::Button(float x, float y, float width, float height, const char* s, Color c, void (*Func)(void*), void* miptr):
 UIElement(x,y,width,height), texto{s}, color{c}
 , callback{CallBack(Func, miptr)}
 {

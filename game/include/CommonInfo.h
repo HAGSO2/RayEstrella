@@ -18,7 +18,6 @@ enum CellType{
 struct Position2{
     int i;
     int j;
-    Position2(int,int);
 };
 
 struct Node{
@@ -31,10 +30,3 @@ struct Node{
     public:
     Node();
 };
-
-// struct TextBoxParams{
-//     std::string& texto;
-//     bool& enter;
-//     bool& selected;
-//     TextBoxParams(std::string& ref);
-// };

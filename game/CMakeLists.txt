@@ -1,6 +1,7 @@
 add_executable(game
     src/main.cpp
     src/Game.cpp
+    src/CommonInfo.cpp
     src/Scenes/Logo.cpp
     src/Scenes/Tittle.cpp
     src/Scenes/Gameplay.cpp

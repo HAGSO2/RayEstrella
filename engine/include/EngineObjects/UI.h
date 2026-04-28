@@ -23,7 +23,7 @@ class UI{ //Canvas
     vector<UIElement*> elements;
     public:
     UI();
-    void AddButton(float x, float y, float width, float height, char* s, Color c, void (*Func)(void*), void* miptr);
+    void AddButton(float x, float y, float width, float height, const char* s, Color c, void (*Func)(void*), void* miptr);
     //void AddButtonScene(float x, float y, float width, float height, char* s, Color c, void (*Func)(GameScreen & variable), GameScreen &meptr);
     void AddTextBox(float x, float y, float width, float height, string& reftxt);
     void Draw();
@@ -41,12 +41,12 @@ class CallBack{
 };
 
 class Button : public UIElement{
-    char* texto;
+    const char* texto;
     Color color;
     CallBack callback;
 
     public:
-    Button(float x, float y, float width, float height, char* s, Color c, void (*Func)(void*), void* miptrs);
+    Button(float x, float y, float width, float height, const char* s, Color c, void (*Func)(void*), void* miptrs);
     void Draw();
     void SetOut() {};
     void UpdateScreen(Vector2);
