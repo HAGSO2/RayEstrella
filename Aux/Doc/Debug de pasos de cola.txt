@@ -1,6 +1,0 @@
-Para ser capaz de mostrar por pantalla no solo los resultados de aplicar una cola o un A* es necesario un método para hacer debug.
-
-¿Que es lo que quiero ver? En el caso de la cola quiero ver cada estado. Cada vez que se inserta, cambia o elimina que flota y que se hunde.
-
-Sería una buena solución despejar la parte que maneja los datos de la clase en un modelo contenido en una struct y una clase que herede de esta,
-grabe ese modelo antes o después de cada una de las operaciones que quiero ver reflejadas.
