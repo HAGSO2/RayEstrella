@@ -1,10 +1,10 @@
 #include "ProgramFlow/Application.hpp"
 #include "ProgramFlow/Scene.h"
-#include "CommonInfo.h"
+#include "CommonInfo.hpp"
 
 #include "Scenes/Logo.h"
 #include "Scenes/Tittle.h"
-#include "Scenes/Gameplay.h"
+#include "Scenes/Gameplay.hpp"
 #include "Scenes/EsDecrementable.h"
 
 class Game : public Application

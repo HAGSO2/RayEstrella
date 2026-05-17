@@ -1,7 +1,7 @@
 #pragma once
 #include <vector>
 #include "ColaNodes.h"
-#include "CommonInfo.h"
+#include "CommonInfo.hpp"
 #include <raylib.h>
 #include <raymath.h>
 
@@ -14,15 +14,15 @@ class AStar{
     Node* currentPosition;
     vector<Node*> open;
     vector<Node*> closed;
-    Position2 target;
+    Position target;
     ColaNodes cola;
     Node (&tabletop)[CELL_Y][CELL_X];
     public:
     AStar(Node (&tabletop)[CELL_Y][CELL_X]);
-    vector<Node*> Pathfinding(Position2 s, Position2 t);
+    vector<Node*> Pathfinding(Position s, Position t);
     private:
     void Step();
-    float Heuristic(Position2 s);
+    float Heuristic(Position s);
     //Añade a la lista opened los nodos colindantes
     void CalcNeightbours();
 };

@@ -2,9 +2,8 @@
 #include "ProgramFlow/Scene.h"
 #include "EngineObjects/GameObject.h"
 #include "Containers/AStar.h"
-#include "CommonInfo.h"
+#include "CommonInfo.hpp"
 
-#pragma once
 #pragma region Definitions
 #define WORLD_X_OFFSET 75.0f
 #define WORLD_Y_OFFSET 75.0f
@@ -16,6 +15,10 @@
 #define END_X   9
 #define END_Y   2
 #define END_COLOR PURPLE
+#define RessetButtonText "Todo a cero"
+#define RessetButtonColor ORANGE
+#define ResearchButtonText "Empieza la búsqueda"
+#define ResearchButtonColor GREEN
 #pragma endregion
 
 
@@ -32,9 +35,10 @@ public:
 	void UnloadScreen() override {};
     void OnMouseDown() override;
     void OnKeyPressed(KeyboardKey) override;
-
-    void TodoACero();
-    void EmpiezaBusqueda();
-    void SoloUnPaso() {};
+    
+    //This methos are public due the need of being called by the buttons in the UI, but they are not intended to be used outside of this class.
+    void AllZero();
+    void RessearchStart();
+    //void SoloUnPaso() {};
     
 };

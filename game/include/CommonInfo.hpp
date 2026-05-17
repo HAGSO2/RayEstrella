@@ -15,14 +15,11 @@ enum CellType{
 	EXIT = 6
 };
 
-struct Position2{
-    int i;
-    int j;
-};
+typedef std::pair<int,int> Position;
 
 struct Node{
     CellType type;
-    Position2 position;
+    Position position;
     int index;
     float F;
     int G;

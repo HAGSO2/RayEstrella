@@ -1,7 +1,7 @@
 #pragma once
 #include <vector>
 #include <string>
-#include "CommonInfo.h"
+#include "CommonInfo.hpp"
 
 using namespace std;
 

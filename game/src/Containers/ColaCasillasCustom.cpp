@@ -11,7 +11,7 @@
 //     else if(corazon.monticulo[corazon.posiciones[elem]].second > w){
 //         Cambiar(elem, w);
 //     };
-    
+
 //     ultimo++;
 // };
 
@@ -51,7 +51,7 @@
 //             hijo++;
 //         if(corazon.monticulo[hijo].second < corazon.monticulo[i].second){
 //             /*
-//             * <A,32> -> (<C,2>|<V,4>) ==> 
+//             * <A,32> -> (<C,2>|<V,4>) ==>
 //             *   <C,2> -> (<A,32|<V,4>)
 //             */
 //             corazon.posiciones[corazon.monticulo[hijo].first] = i;
@@ -60,14 +60,14 @@
 //             corazon.monticulo[i] = aux;
 //             return Hundir(hijo);
 //         }
-        
+
 //     }     //Si es mayor que último tengo que ver
 //     else if(i > ultimo){
 //         return i/2;
-//     }   
-    
+//     }
+
 //     return i;
-    
+
 // };
 
 // template<>
@@ -87,7 +87,7 @@
 //     else{
 //         return i;
 //     }
-    
+
 // };
 // #pragma endregion
 
@@ -103,7 +103,7 @@
 //     else if(corazon.monticulo[corazon.posiciones[elem->index]].second > w){
 //         Cambiar(elem, w);
 //     };
-    
+
 //     ultimo++;
 // };
 
@@ -143,7 +143,7 @@
 //             hijo++;
 //         if(corazon.monticulo[hijo].second < corazon.monticulo[i].second){
 //             /*
-//             * <A,32> -> (<C,2>|<V,4>) ==> 
+//             * <A,32> -> (<C,2>|<V,4>) ==>
 //             *   <C,2> -> (<A,32|<V,4>)
 //             */
 //             corazon.posiciones[((Node*)corazon.monticulo[hijo].first)->index] = i;
@@ -152,14 +152,14 @@
 //             corazon.monticulo[i] = aux;
 //             return Hundir(hijo);
 //         }
-        
+
 //     }     //Si es mayor que último tengo que ver
 //     else if(i > ultimo){
 //         return i/2;
-//     }   
-    
+//     }
+
 //     return i;
-    
+
 // }
 
 // template<>
@@ -178,6 +178,6 @@
 //     else{
 //         return i;
 //     }
-    
+
 // }
 // #pragma endregion

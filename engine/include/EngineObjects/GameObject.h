@@ -17,7 +17,7 @@ class Sprite : public GameObject{
     Vector2 size;
     Color color;
 public:
-    Sprite(Vector2 f, Vector2 s, Color c);
+    Sprite(Vector2 position, Vector2 size, Color c);
     void ChangeColor(Color c);
     void DrawObject();
 };

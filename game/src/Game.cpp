@@ -11,7 +11,8 @@ void Game::LoadResources()
 
 void Game::InitStarters()
 {
-    SetTargetFPS(60);
+    SetTargetFPS(FPs);
+    //  Audio device must be initialized before loading any sound/music
     InitAudioDevice();
     //  Initialize game scenes and other necessary components here
     gameScenes[LOGO] = new Logo();
@@ -22,24 +23,25 @@ void Game::InitStarters()
     currentScreen = LOGO;
 }
 
+//  Init Game
 void Game::Init()
 {
+    // Initialize window and traces log.
     InitWindow(screenWidth, screenHeight, ApplicationName.c_str());
     SetTraceLogLevel(LOG_ALL);
+
     // Initialize game resources here
     InitStarters();
     LoadResources();
-    
 
     SetMusicVolume(music, 1.0f);
     PlayMusicStream(music);
 
     gameScenes[currentScreen]->InitScene();
 }
-
+// Update logic (input, music, etc.)
 void Game::Update()
 {
-    // Update game logic here
     UpdateMusicStream(music); // NOTE: Music keeps playing between screens
 
     if (!onTransition)
@@ -54,14 +56,14 @@ void Game::Update()
     else
         UpdateTransition(); // Update transition (fade-in, fade-out)
 }
-
+// Draw game elements on the screen
 void Game::Draw()
 {
     // Draw game elements here
     BeginDrawing();
 
     ClearBackground(RAYWHITE);
-
+    // Draw current screen
     gameScenes[currentScreen]->DrawScreen();
 
     // Draw full screen rectangle in front of everything
@@ -72,7 +74,7 @@ void Game::Draw()
 
     EndDrawing();
 }
-
+// Unload game resources and close the game
 void Game::Unload()
 {
     gameScenes[currentScreen]->UnloadScreen();

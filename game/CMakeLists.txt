@@ -6,6 +6,7 @@ add_executable(game
     src/Scenes/Tittle.cpp
     src/Scenes/Gameplay.cpp
     src/Scenes/EsDecrementable.cpp
+    src/Scenes/TemplateScene.cpp
     src/Containers/ColaCasillas.cpp
     src/Containers/ColaNodes.cpp
     src/Containers/DebugColaCasillas.cpp

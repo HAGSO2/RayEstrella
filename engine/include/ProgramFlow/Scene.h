@@ -10,12 +10,16 @@ enum GameScreen {
     DECREMENTABLE = 3
 };
 
+#define GameplayButtonText "Gameplay"
+#define DecrementableButtonText "Cola decrementable"
+
 
 class Scene {
 protected:
 	GameScreen finishScreen;
 	Vector2 mousePosition;
 	UI canvas;
+	Color backgroundColor;
 	
 public:
 	Scene();
