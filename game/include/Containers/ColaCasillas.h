@@ -5,21 +5,21 @@
 
 using namespace std;
 
-#define salto 10
+#define jump 10
 
 
-struct ModeloCola{
-    //Donde float es el peso del elemento en el montículo
-    //Donde int es la posición del array de posiciones
-    vector<pair<int,float>> monticulo;
-    //En cada posición descansa el índice al montículo. Cada elemento del montículo va del 1 al máximo
-    //Y cada una de las posiciones de este array posiciones, representa un número de ese rango. Para
-    //saber la posición de un elemento i en el montículo hay que ir a posiciones[i].
-    //Cada vez que la posición cambie, hay que cambiarla de aquí
-    vector<int> posiciones;
-    //cuando esto esté funcionando, para mayor eficiencia esto podría ser un array
-    ModeloCola(int max);
+struct QueueModel{
+    //Where float is the weight of the element in the heap
+    //Where int is the position in the positions array
+    vector<pair<int,float>> heap;
+    //Each position of this array represents an element, and the value is the index in the heap where it is located.
+    //If the value is -1, it means that the element is not in the heap.
+    //For example, if we want to know the position of element 5 in the heap, we look at positions[5],
+    //and it gives us the index in the monticulo where it is located.
+    vector<int> positions;
+    QueueModel(int max);
 
+    //Small debug methods
     string ToString();
     vector<string> SplitString();
 };
@@ -27,22 +27,22 @@ struct ModeloCola{
 
 class ColaCasillas{
 protected:
-    ModeloCola corazon;
-    int ultimo;
+    QueueModel heart;
+    int last;
 public:
     ColaCasillas(int max);
-    //El w (weight) es el peso que se le da al elemento
-    //El ind es el indice que ocupará en el array de posisiciones
-    //El punt es el puntero al elemento
-    void Añadir(int ind, float w); //log(n)
-    void Eliminar(int elem);
-    void Cambiar(int ind, float w);
-    int MirarMínimo();
-    void EliminaMínimo();
-    ModeloCola* DevuelveActual() {return &corazon;}
+    //Weight will determine the position of the element in the heap
+    //Elem is the value of the element
+    void Add(int elem, float weight); //log(n)
+    void Delete(int elem);
+    void Change(int ind, float w);
+    int SeekMinimum();
+    void DeleteMinimum();
+    QueueModel* ReturnCurrent() {return &heart;}
+    void Resset() { last = 1; heart = QueueModel(heart.heap.size()); };
     string ToString();
 protected:
-    void Alargar();
-    int Flotar(int i);
-    int Hundir(int i);
+    void Enlarge();
+    int Float(int i);
+    int Sink(int i);
 };

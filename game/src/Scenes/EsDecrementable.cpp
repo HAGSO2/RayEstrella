@@ -35,7 +35,7 @@ void EsDecrementable::InsertaElemento(const char *nombre, int prio)
     int resta = (int)*nombre - (int)minimoLetra;
     if (nombre != "" && resta > -1)
     {
-        cola.Añadir(resta, prio);
+        cola.Add(resta, prio);
         active++;
     };
 };
@@ -51,7 +51,7 @@ void EsDecrementable::CambiaElemento(const char *nombre, int prio)
     if (nombre != "" && resta > -1)
     {
         // TraceLog(LOG_DEBUG,"Cambiando: %d a %d",resta, prio);
-        cola.Cambiar(resta, prio);
+        cola.Change(resta, prio);
     }
 };
 
@@ -66,7 +66,7 @@ void EsDecrementable::EliminaElemento(const char *nombre)
     if (nombre != "" && resta > -1)
     {
         // TraceLog(LOG_DEBUG,"Eliminando: %d",resta);
-        cola.Eliminar(resta);
+        cola.Delete(resta);
         active--;
     }
 };
@@ -85,7 +85,7 @@ void EsDecrementable::RessetText()
 void EsDecrementable::ActualizaActores()
 {
     // Cuando quiera que se haga en diferentes pasos, hay que revisar esta línea
-    vector<ModeloCola *> vect = {cola.DevuelveActual()};
+    vector<QueueModel *> vect = {cola.ReturnCurrent()};
     //->
     for (int i = 0; i < vect.size(); i++)
     {

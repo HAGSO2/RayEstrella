@@ -33,6 +33,7 @@ void Gameplay::AllZero()
 
     nodes[END_Y][END_X].type = EXIT;
     cells[END_Y][END_X]->ChangeColor(END_COLOR);
+    estrella.Resset();
 }
 
 void Gameplay::RessearchStart()

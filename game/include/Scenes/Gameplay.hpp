@@ -3,6 +3,7 @@
 #include "EngineObjects/GameObject.h"
 #include "Containers/AStar.h"
 #include "CommonInfo.hpp"
+#include "HardcodedStrings.hpp"
 
 #pragma region Definitions
 #define WORLD_X_OFFSET 75.0f
@@ -15,9 +16,7 @@
 #define END_X   9
 #define END_Y   2
 #define END_COLOR PURPLE
-#define RessetButtonText "Todo a cero"
 #define RessetButtonColor ORANGE
-#define ResearchButtonText "Empieza la búsqueda"
 #define ResearchButtonColor GREEN
 #pragma endregion
 
@@ -39,6 +38,5 @@ public:
     //This methos are public due the need of being called by the buttons in the UI, but they are not intended to be used outside of this class.
     void AllZero();
     void RessearchStart();
-    //void SoloUnPaso() {};
     
 };

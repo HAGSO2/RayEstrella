@@ -1,5 +1,5 @@
 #include "Scenes/Tittle.h"
-
+#include "HardcodedStrings.hpp"
 #pragma region To other scenes
 
 void ToGameplay(void *ptr)
@@ -48,7 +48,8 @@ void Tittle::DrawScreen()
     DrawRectangle(0, 0, GetScreenWidth(), GetScreenHeight(), backgroundColor);
 
     // Title text
-    DrawTextEx(font, "TITLE SCREEN", Vector2{20, 10}, font.baseSize * 3.0f, 4, DARKGREEN);
+    DrawText(TitleScreenText, 180, 200, 30, BLACK);
+    //DrawTextEx(font, TitleScreenText, Vector2{20, 10}, font.baseSize * 3.0f, 4, BLACK);
     // Draw buttons and other UI elements
     canvas.Draw();
 };

@@ -2,17 +2,17 @@
 #include "iostream"
 
 AStar::AStar(Node (&tabl)[CELL_Y][CELL_X]) : tabletop{tabl}, cola{ColaNodes(CELL_X * CELL_Y + 1)},
-                                             steps{0}, currentPosition{nullptr}, open{vector<Node *>()}, closed{vector<Node *>()}, target{Position{0, 0}}
+                                             steps{0}, currentPosition{nullptr}, open{vector<Node *>()}, closed{vector<Node *>()}, m_target{Position{0, 0}}
 { /*TraceLog(LOG_DEBUG,cola.ToString().c_str());*/
 }
 
-vector<Node *> AStar::Pathfinding(Position source, Position t)
+vector<Node *> AStar::Pathfinding(Position source, Position target)
 {
     open = vector<Node *>();
     closed = vector<Node *>();
     currentPosition = nullptr;
     steps = 0;
-    target = t;
+    m_target = target;
 
     currentPosition = &tabletop[source.first][source.second];
     int aux = 0;
@@ -21,7 +21,7 @@ vector<Node *> AStar::Pathfinding(Position source, Position t)
     // std::cout << cola.ToString();
     cola.EliminaMínimo();
     // std::cout << cola.ToString();
-    while (currentPosition->position.second != target.second || currentPosition->position.first != target.first)
+    while (currentPosition->position.second != m_target.second || currentPosition->position.first != m_target.first)
     {
         /* code */
         Step();
@@ -34,7 +34,7 @@ void AStar::Step()
 {
     // TraceLog(LOG_DEBUG,"Desde: Índice: %d X:%d, Y:%d",currentPosition->index
     //     ,currentPosition->position.j,currentPosition->position.i);
-    // TraceLog(LOG_DEBUG, "Target: X:%d Y:%d",target.j,target.i);
+    // TraceLog(LOG_DEBUG, "Target: X:%d Y:%d",m_target.j,m_target.i);
     CalcNeightbours();
     for (int i = 0; i < open.size(); i++)
     {
@@ -58,7 +58,7 @@ void AStar::Step()
 float AStar::Heuristic(Position s)
 {
     // The heuristic is the squared distance to the target, multiplied by 10 to make it more significant than the steps taken.
-    float result = sqrtf((s.second - target.second) * (s.second - target.second) + (s.first - target.first) * (s.first - target.first)) * 10;
+    float result = sqrtf((s.second - m_target.second) * (s.second - m_target.second) + (s.first - m_target.first) * (s.first - m_target.first)) * 10;
     return result + steps;
 }
 

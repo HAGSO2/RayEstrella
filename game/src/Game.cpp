@@ -1,12 +1,13 @@
 #include "Game.hpp"
 #include <raylib.h>
+#include "AssetsPath.hpp"
 
 void Game::LoadResources()
 {
     // Load game resources here (e.g., textures, sounds, etc.)
     // TODO: Make this more generic, maybe with a ResourceManager class?
-    font = LoadFont("assets/fonts/mecha.png");
-    music = LoadMusicStream("assets/sounds/ambient.ogg");
+    //font = LoadFont(Font);
+    music = LoadMusicStream(Music);
 }
 
 void Game::InitStarters()
